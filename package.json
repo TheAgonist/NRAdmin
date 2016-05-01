@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "async": "^1.x.x",
-    "bcrypt": "~0.8.6",
+    "bcrypt": "^0.8.x",
     "body-parser": "^1.x.x",
     "compression": "^1.x.x",
     "connect-mongo": "^0.8.x",
