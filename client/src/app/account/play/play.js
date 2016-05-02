@@ -26,16 +26,14 @@ angular.module('account.play').config(['$routeProvider', 'securityAuthorizationP
     });
 }]);
 
-angular.module('account.play').controller('PlayCtrl', [ '$scope', '$location', '$log', 'security', 'utility', 'recordResource', 'SOCIAL',
-  function($scope, $location, $log, security, utility, restResource, SOCIAL){
+angular.module('account.play').controller('PlayCtrl', [ '$scope', '$location', '$log', 'security', 'utility', 'recordResource', 'accountResource', 'SOCIAL',
+  function($scope, $location, $log, security, utility, restResource, accountResource, SOCIAL){
     restResource.getRecordDetails().then(function(data){
         var records = data.account;
         var rank = 1;
         for(var record in records){
-            if(records[record].delete === 0){
                 displayRecord(records[record], rank);
                 rank++;
-            }
         }
       });
     function displayRecord(record, rank){
@@ -44,7 +42,9 @@ angular.module('account.play').controller('PlayCtrl', [ '$scope', '$location', '
       var second = document.createElement("TD");
       second.innerHTML = record.name;
       var third = document.createElement("TD");
-      third.innerHTML = record.user;
+      accountResource.getAccountDetails(record.user).then(function(data){
+        third.innerHTML = data.user.username;
+      });
       var fourth = document.createElement("TD");
       fourth.innerHTML = record.votes;
       var fifth = document.createElement("TD");
@@ -109,21 +109,10 @@ angular.module('account.play').controller('PlayCtrl', [ '$scope', '$location', '
       var play = document.createElement("BUTTON");
       play.id = "playButton";
       play.onclick = function() {
-          createAudioTag(record);
-           };
+                  location.href ='./comments?songName='+record.name;
+      };
       play.innerHTML = "PLAY";
       return play;
-    }
-
-    function createAudioTag(record){
-      var audio = document.createElement("AUDIO");
-      audio.controls = true;
-      var source = document.createElement("SOURCE");
-      source.src = "http://localhost:3000/img/Night.mp3";
-      source.type = "audio/mpeg";
-      audio.appendChild(source);
-      var row = document.getElementById("row");
-      row.appendChild(audio);
     }
 
     function upvoteFunc(record){

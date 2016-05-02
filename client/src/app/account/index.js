@@ -5,4 +5,5 @@ angular.module('account', [
   'account.play',
   'account.sheetMusic',
   'account.upload',
+  'account.comments',
 ]);

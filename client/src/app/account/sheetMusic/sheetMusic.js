@@ -1,11 +1,11 @@
 angular.module('account.sheetMusic', ['config', 'account.settings.social', 'security.service', 'security.authorization', 'services.recordResource', 'services.utility','ui.bootstrap', 'directives.serverError']);
 
 
-angular.module('account.play').config(['$routeProvider', 'securityAuthorizationProvider', function($routeProvider){
+angular.module('account.sheetMusic').config(['$routeProvider', 'securityAuthorizationProvider', function($routeProvider){
   $routeProvider
     .when('/account/sheetMusic', {
       templateUrl: 'account/sheetMusic/sheetMusic.tpl.html',
-      controller: 'SheetMisicCtrl',
+      controller: 'SheetMusicCtrl',
       title: 'SheetMusic',
       // resolve: {
       //   accountDetails: ['$q', '$location', 'securityAuthorization', 'accountResource' ,function($q, $location, securityAuthorization, accountResource){
@@ -32,9 +32,6 @@ angular.module('account.play').config(['$routeProvider', 'securityAuthorizationP
 
 angular.module('account.sheetMusic').controller('SheetMusicCtrl', [ '$scope', '$location', '$log', 'security', 'utility', 'recordResource', 'SOCIAL',
   function($scope, $location, $log, security, utility, restResource, SOCIAL){
-     initController();
-        
-        function initController(){
           console.log('hi');
           var notes = new Array();
 
@@ -169,7 +166,5 @@ angular.module('account.sheetMusic').controller('SheetMusicCtrl', [ '$scope', '$
 
           // Render voice
           //voice.draw(ctx, stave);
-                
-        }
   }
 ]);

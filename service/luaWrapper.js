@@ -8,7 +8,7 @@ var luaWrapper = {
     //router.put('/:_id', updateRecord);
 
      getBuffer: function(req, res){
-        //console.log("\n"+window.location.pathname+"\n");
+        console.log("arrived");
         require('child_process').exec("th ./././lstm2/encode.lua -filename public/img/"+req.body.bufferName /*"./././public/img/bufferName "*/, function(error,stdout,stderr){
             if (error) {
                         console.log(error.stack);
