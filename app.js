@@ -55,9 +55,38 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+var busboy = require('connect-busboy'),
+    fs = require('fs-extra');
+var record = require('./service/record');
+
+app.use(busboy());
+app.route('/upload').post(function(req, res, next){
+  var fstream;
+  req.pipe(req.busboy);
+  req.busboy.on('file', function (fieldname, file, filename) {
+    console.log("Uploading: " + filename);
+
+    //Path where image will be uploaded
+    fstream = fs.createWriteStream(__dirname + '/public/songs/' + filename);
+    file.pipe(fstream);
+    fstream.on('close', function () {
+      var set = {
+          name: filename,
+          user: req.session.passport.user,
+          show: -2,
+          votes: 0,
+          delete: 0,
+      };
+      req.app.db.models.Record.create(set);
+      res.redirect('http://localhost:3000/account/upload');           //where to go next
+    });
+  });
+});
+
 app.use(csrf({ cookie: { signed: true } }));
 helmet(app);
-
+  
 //response locals
 app.use(function(req, res, next) {
   res.cookie('_csrfToken', req.csrfToken());

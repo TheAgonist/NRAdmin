@@ -14,10 +14,17 @@ angular.module('services.recordResource', ['security.service']).factory('recordR
   // public api
   var resource = {};
   resource.getRecordDetails = function(){
+    console.log("dddcccc");
     return $http.get(baseUrl + '/record/all').then(processResponse, processError);
   };
   resource.upvote = function(record){
     return $http.put(baseUrl + '/record/upvote', record).then(processResponse, processError);
+  };
+  resource.deleteRecord = function(record){
+    return $http.put(baseUrl + '/record/delete', record).then(processResponse, processError);
+  };
+  resource.getUserRecordDetails = function(){
+    return $http.get(baseUrl + '/record/user').then(processResponse, processError);
   };
   return resource;
 }]);

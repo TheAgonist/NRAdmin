@@ -87,7 +87,10 @@ exports = module.exports = function(app, passport) {
   app.get('/api/account/settings/facebook/disconnect', account.disconnectFacebook);
 
   app.get('/api/record/all',record.getRecordDetails);
+  app.get('/api/record/user',record.getUserRecordDetails);
   app.put('/api/record/upvote',record.update);
+  app.put('/api/record/delete',record.update);
+  //app.put('/api/record/delete',record.update);
 
   //-----athorization required api-----
   app.all('/api/admin*', apiEnsureAuthenticated);
@@ -191,6 +194,7 @@ exports = module.exports = function(app, passport) {
 
   //account > play
   app.get('/account/play', useAngular);
+  //app.get('/account/sheetMusic?bufferName', useAngular);
 
   //account > settings > social
   app.get('/account/settings/facebook/', passport.authenticate('facebook', { callbackURL: 'http://' + app.config.hostname + '/account/settings/facebook/callback', scope: [ 'email' ]}));

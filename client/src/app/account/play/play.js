@@ -32,7 +32,7 @@ angular.module('account.play').controller('PlayCtrl', [ '$scope', '$location', '
         var records = data.account;
         var rank = 1;
         for(var record in records){
-            if(records[record].delete == 0){
+            if(records[record].delete === 0){
                 displayRecord(records[record], rank);
                 rank++;
             }
@@ -44,9 +44,9 @@ angular.module('account.play').controller('PlayCtrl', [ '$scope', '$location', '
       var second = document.createElement("TD");
       second.innerHTML = record.name;
       var third = document.createElement("TD");
-      third.innerHTML = record.user
+      third.innerHTML = record.user;
       var fourth = document.createElement("TD");
-      fourth.innerHTML = record.votes
+      fourth.innerHTML = record.votes;
       var fifth = document.createElement("TD");
       var upvote = createUpvoteButton(record);
       fifth.appendChild(upvote);
@@ -78,9 +78,9 @@ angular.module('account.play').controller('PlayCtrl', [ '$scope', '$location', '
     function createDeleteButton(record){
       var del = document.createElement("BUTTON");
       del.id = "deleteButton";
-      del.onclick = function(){
+      /*del.onclick = function(){
           PlayService.deleteRecord(record);
-      }
+      }*/
       del.innerHTML = "delete";
       return del;
     }
@@ -89,7 +89,7 @@ angular.module('account.play').controller('PlayCtrl', [ '$scope', '$location', '
       var sheet = document.createElement("BUTTON");
       sheet.id = "sheetButton";
       sheet.onclick = function() {
-          location.href ='./#/sheetMusic?bufferName='+record.name;
+          location.href ='./sheetMusic?bufferName='+record.name;
       };
       sheet.innerHTML = "Show sheet music";
       return sheet;
@@ -120,7 +120,7 @@ angular.module('account.play').controller('PlayCtrl', [ '$scope', '$location', '
       audio.controls = true;
       var source = document.createElement("SOURCE");
       source.src = "http://localhost:3000/img/Night.mp3";
-      source.type = "audio/mpeg"
+      source.type = "audio/mpeg";
       audio.appendChild(source);
       var row = document.getElementById("row");
       row.appendChild(audio);

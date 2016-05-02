@@ -3,5 +3,6 @@ angular.module('account', [
   'account.settings',
   'account.verification',
   'account.play',
-  'account.upload'
+  'account.sheetMusic',
+  'account.upload',
 ]);
