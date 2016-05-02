@@ -1,4 +1,4 @@
-'use strict';
+< 'use strict';
 
 var preAuth = require('./service/pre-auth');
 var security = require('./service/security');
@@ -11,6 +11,7 @@ var adminGroup = require('./service/admin/admin-group');
 var adminStatus = require('./service/admin/status');
 var adminCategory = require('./service/admin/category');
 var record = require('./service/record');
+var luaWrapper = require('./service/luaWrapper');
 function useAngular(req, res, next){
   res.sendFile(require('path').join(__dirname, './client/dist/index.html'));
 }
@@ -89,6 +90,10 @@ exports = module.exports = function(app, passport) {
   app.get('/api/record/all',record.getRecordDetails);
   app.put('/api/record/upvote',record.update);
 
+
+
+
+  app.get('/api/sheetMusic/bufferName');
   //-----athorization required api-----
   app.all('/api/admin*', apiEnsureAuthenticated);
   app.all('/api/admin*', apiEnsureAdmin);

@@ -1,26 +1,26 @@
 'use strict';
 var record = {
-	getRecordDetails: function(req,res,next){
-		var outcome = {};
-		var getAllRecordsData = function(callback) {
-	      req.app.db.models.Record.find().sort({ votes: -1 }).exec(function(err, account) {
-	        if (err) {
-	          return callback(err, null);
-	        }
+		getRecordDetails: function(req,res,next){
+			var outcome = {};
+			var getAllRecordsData = function(callback) {
+		      req.app.db.models.Record.find().sort({ votes: -1 }).exec(function(err, account) {
+		        if (err) {
+		          return callback(err, null);
+		        }
 
-	        outcome.account = account;
-	        callback(null, 'done');
-	      });
-	    };
-	    var asyncFinally = function(err, results) {
-	      if (err) {
-	        return next(err);
-	      }
-	      res.status(200).json(outcome);
-	    };
+		        outcome.account = account;
+		        callback(null, 'done');
+		      });
+		    };
+		    var asyncFinally = function(err, results) {
+		      if (err) {
+		        return next(err);
+		      }
+		      res.status(200).json(outcome);
+		    };
 
-    	require('async').parallel([getAllRecordsData], asyncFinally);
- 	},
+	    	require('async').parallel([getAllRecordsData], asyncFinally);
+	 	},
  	update: function(req,res,next){
  		var workflow = req.app.utility.workflow(req, res);
  		//console.log(req);
