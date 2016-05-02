@@ -1,4 +1,4 @@
-'use strict';
+ 'use strict';
 var record = {
 	getRecordDetails: function(req,res,next){
 		var outcome = {};
