@@ -74,9 +74,9 @@ app.route('/upload').post(function(req, res, next){
       var set = {
           name: filename,
           user: req.session.passport.user,
-          show: -2,
+          show: false,
           votes: 0,
-          delete: 0,
+          delete: false,
       };
       req.app.db.models.Record.create(set);
       res.redirect('http://localhost:3000/account/upload');           //where to go next

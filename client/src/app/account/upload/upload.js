@@ -50,12 +50,16 @@ angular.module('account.upload').controller('RecordCtrl', [ '$scope', '$location
       var fifth = document.createElement("TD");
       fifth.appendChild(delButton);
       var row = document.createElement("TR");
+      var showButton = createShowButton(record);
+      var sixth = document.createElement("TD");
+      sixth.appendChild(showButton);
       row.id = "row";
       row.appendChild(first);
       row.appendChild(second);
       row.appendChild(third);
       row.appendChild(fourth);
       row.appendChild(fifth);
+      row.appendChild(sixth);
       var table = document.getElementById("listRecords");
       table.appendChild(row);
     }
@@ -90,6 +94,20 @@ angular.module('account.upload').controller('RecordCtrl', [ '$scope', '$location
       };
       play.innerHTML = "PLAY";
       return play;
+    }
+
+    function createShowButton(record){
+      var checkbox = document.createElement('input');
+      checkbox.type = "checkbox";
+      checkbox.id = "checkbox";
+      checkbox.onclick = function OnChangeCheckbox (){
+        restResource.showRecord(record);
+      }
+      checkbox.checked = false;
+      if(record.show == true){
+        checkbox.checked = true;
+      } 
+      return checkbox;
     }
 
     function createAudioTag(record){

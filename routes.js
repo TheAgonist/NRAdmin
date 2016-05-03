@@ -79,6 +79,7 @@ exports = module.exports = function(app, passport) {
   app.all('/api/account/settings*', apiEnsureVerifiedAccount);
 
   app.get('/api/account/settings', account.getAccountDetails);
+  app.get('/api/account/find', account.getAccountDetails);
   app.put('/api/account/settings', account.update);
   app.put('/api/account/settings/identity', account.identity);
   app.put('/api/account/settings/password', account.password);
@@ -87,16 +88,21 @@ exports = module.exports = function(app, passport) {
   app.get('/api/account/settings/facebook/callback', account.connectFacebook);
   app.get('/api/account/settings/facebook/disconnect', account.disconnectFacebook);
 
-  app.get('/api/record/all',record.getRecordDetails);
-  app.get('/api/record/user',record.getUserRecordDetails);
-  app.put('/api/record/upvote',record.update);
-  app.put('/api/record/delete',record.update);
+  app.get('/api/record/all', record.getRecordDetails);
+  app.get('/api/record/user', record.getUserRecordDetails);
+  app.put('/api/record/upvote', record.update);
+  app.put('/api/record/delete', record.update);
+  app.put('/api/record/show', record.update);
   //app.put('/api/record/delete',record.update);
 
 
 
 
+<<<<<<< HEAD
   app.get('/api/sheetMusic/bufferName',luaWrapper.getBuffer);
+=======
+  app.get('/api/sheetMusic/bufferName', luaWrapper.getBuffer);
+>>>>>>> feb538e3a31fe0f04b330b0c684a2a6933929e98
   //-----athorization required api-----
   app.all('/api/admin*', apiEnsureAuthenticated);
   app.all('/api/admin*', apiEnsureAdmin);

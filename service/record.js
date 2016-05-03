@@ -3,10 +3,9 @@ var record = {
 	getRecordDetails: function(req,res,next){
 		var outcome = {};
 		var getAllRecordsData = function(callback) {
-			console.log("ddddd");
-	      req.app.db.models.Record.find().sort({ votes: -1 }).exec(function(err, account) {
-	        if (err) {
-	          return callback(err, null);
+	    req.app.db.models.Record.find({'deleted': false, 'show': true}).sort({ votes: -1 }).exec(function(err, account) {
+	    	if (err) {
+	        	return callback(err, null);
 	        }
 
 	        outcome.account = account;
@@ -61,6 +60,17 @@ var record = {
 		    	var fieldsToSet = {
 					deleted: true
 		    	};
+		    }
+		    if(action == "/api/record/show"){
+		    	if(req.body.show == false){
+			    	var fieldsToSet = {
+						show: true
+			    	};
+		    	}else{
+		    		var fieldsToSet = {
+		    			show: false
+		    		};
+		    	}
 		    }
 	    	console.log(fieldsToSet.deleted+" ||||||||||||||||||| "+req.body._id);
 	    	req.app.db.models.Record.findByIdAndUpdate(req.body._id, fieldsToSet, function(err, record) {
