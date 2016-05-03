@@ -32,10 +32,6 @@ angular.module('account.play').controller('PlayCtrl', [ '$scope', '$location', '
         var records = data.account;
         var rank = 1;
         for(var record in records){
-<<<<<<< HEAD
-            if(records[record].deleted === false){
-=======
->>>>>>> feb538e3a31fe0f04b330b0c684a2a6933929e98
                 displayRecord(records[record], rank);
                 rank++;
         }
