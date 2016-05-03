@@ -15,9 +15,9 @@ angular.module('services.linuxWrapperResource', ['security.service']).factory('l
 
   var resource = {};
 
-  resource.getBuffer = function(bufferName){
-  	return $http.get(baseURL+'/sheetMusic/bufferName',bufferName).then(processResponse,processError);
-  }
+  resource.getBuffer = function(buffer){
+  	return $http.get(baseUrl+'/sheetMusic/bufferName',buffer).then(processResponse,processError);
+  };
 
   return resource;
 }]);
