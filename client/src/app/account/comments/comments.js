@@ -1,4 +1,4 @@
-angular.module('account.comments', ['config', 'account.settings.social', 'security.service', 'security.authorization', 'services.recordResource', 'services.utility','ui.bootstrap', 'directives.serverError']);
+angular.module('account.comments', ['config', 'account.settings.social', 'security.service', 'security.authorization', 'services.commentResource', 'services.utility','ui.bootstrap', 'directives.serverError']);
 angular.module('account.comments').config(['$routeProvider', 'securityAuthorizationProvider', function($routeProvider){
   $routeProvider
     .when('/account/comments', {
@@ -26,8 +26,15 @@ angular.module('account.comments').config(['$routeProvider', 'securityAuthorizat
     });
 }]);
 
-angular.module('account.comments').controller('CommentsCtrl', [ '$scope', '$location', '$log', 'security', 'utility', 'recordResource', 'accountResource', 'SOCIAL',
+angular.module('account.comments').controller('CommentsCtrl', [ '$scope', '$location', '$log', 'security', 'utility', 'commentResource', 'accountResource', 'SOCIAL',
   function($scope, $location, $log, security, utility, restResource, accountResource, SOCIAL){
     songName = $location.$$search.songName;
+    var submitDetailForm = function(){
+      restResource.setComment($scope.comment);
+    }
+
+    $scope.submit = function(){
+      submitDetailForm();
+    }
   }
 ]);

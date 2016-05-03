@@ -14,4 +14,6 @@ exports = module.exports = function(app, mongoose) {
   require('./schema/Account')(app, mongoose);
   require('./schema/LoginAttempt')(app, mongoose);
   require('./schema/Record')(app, mongoose);
+  require('./schema/Comment')(app, mongoose);
+
 };

@@ -12,6 +12,7 @@ var adminStatus = require('./service/admin/status');
 var adminCategory = require('./service/admin/category');
 var record = require('./service/record');
 var luaWrapper = require('./service/luaWrapper');
+var comment = require('./service/comment');
 function useAngular(req, res, next){
   res.sendFile(require('path').join(__dirname, './client/dist/index.html'));
 }
@@ -93,6 +94,8 @@ exports = module.exports = function(app, passport) {
   app.put('/api/record/upvote', record.update);
   app.put('/api/record/delete', record.update);
   app.put('/api/record/show', record.update);
+  app.post('/api/comment/insert', comment.insert);
+
   //app.put('/api/record/delete',record.update);
 
 
