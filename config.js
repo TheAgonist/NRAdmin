@@ -3,11 +3,11 @@
 exports.hostname = process.env.hostname || 'localhost';
 exports.port = process.env.PORT || 3000;
 exports.mongodb = {
-  uri: process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://a:a@localhost:27017/testAdmin'
+  uri: process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://zambos:zambos@localhost:27017/angular-drywall'
 };
 exports.companyName = 'Arthur Kao';
 exports.projectName = 'Angular Drywall';
-exports.systemEmail = 'aleks_bs95@abv.bg';
+exports.systemEmail = 'zambos@abv.bg';
 exports.cryptoKey = 'k3yb0ardc4t';
 exports.loginAttempts = {
   forIp: 50,
@@ -18,12 +18,12 @@ exports.requireAccountVerification = false;
 exports.smtp = {
   from: {
     name: process.env.SMTP_FROM_NAME || exports.projectName +' Website',
-    address: process.env.SMTP_FROM_ADDRESS || 'aleks_bs95@abv.bg'
+    address: process.env.SMTP_FROM_ADDRESS || 'zambos@abv.bg'
   },
   credentials: {
-    user: process.env.SMTP_USERNAME || '',
-    password: process.env.SMTP_PASSWORD || '',
-    host: process.env.SMTP_HOST || '',
+    user: process.env.SMTP_USERNAME || 'zambos@abv.bg',
+    password: process.env.SMTP_PASSWORD || 'asd',
+    host: process.env.SMTP_HOST || 'smtp.gmail.com',
     ssl: true
   }
 };
@@ -52,3 +52,4 @@ exports.oauth = {
     secret: process.env.TUMBLR_OAUTH_SECRET || ''
   }
 };
+

@@ -32,7 +32,7 @@ angular.module('account.play').controller('PlayCtrl', [ '$scope', '$location', '
         var records = data.account;
         var rank = 1;
         for(var record in records){
-            if(records[record].delete === 0){
+            if(records[record].deleted === false){
                 displayRecord(records[record], rank);
                 rank++;
             }
