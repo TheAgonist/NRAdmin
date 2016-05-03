@@ -15,7 +15,6 @@ angular.module('services.commentResource', ['security.service']).factory('commen
   var resource = {};
 
   resource.setComment = function(data){
-    console.log(data);
     return $http.post(baseUrl+'/comment/insert', data).then(processResponse, processError);
   };
   return resource;

@@ -30,7 +30,7 @@ angular.module('account.comments').controller('CommentsCtrl', [ '$scope', '$loca
   function($scope, $location, $log, security, utility, restResource, accountResource, SOCIAL){
     songName = $location.$$search.songName;
     var submitDetailForm = function(){
-      restResource.setComment($scope.comment.toString());
+      restResource.setComment($scope.comment);
     }
 
     $scope.submit = function(){
