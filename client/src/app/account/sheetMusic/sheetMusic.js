@@ -32,9 +32,12 @@ angular.module('account.sheetMusic').config(['$routeProvider', 'securityAuthoriz
 
 angular.module('account.sheetMusic').controller('SheetMusicCtrl', [ '$scope', '$location', '$log', 'security', 'utility', 'linuxWrapperResource', 'SOCIAL',
   function($scope, $location, $log, security, utility, restResource, SOCIAL){
+<<<<<<< HEAD
      initController();
           
         function initController(){
+=======
+>>>>>>> feb538e3a31fe0f04b330b0c684a2a6933929e98
           console.log('hi');
           var notes = [];
 
