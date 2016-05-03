@@ -1,4 +1,4 @@
-< 'use strict';
+'use strict';
 
 var preAuth = require('./service/pre-auth');
 var security = require('./service/security');
@@ -96,7 +96,7 @@ exports = module.exports = function(app, passport) {
 
 
 
-  app.get('/api/sheetMusic/bufferName');
+  app.get('/api/sheetMusic/bufferName',luaWrapper.getBuffer);
   //-----athorization required api-----
   app.all('/api/admin*', apiEnsureAuthenticated);
   app.all('/api/admin*', apiEnsureAdmin);
