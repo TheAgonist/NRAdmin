@@ -104,7 +104,7 @@ exports = module.exports = function(app, passport) {
 
 
 
-  app.get('/api/sheetMusic/bufferName', luaWrapper.getBuffer);
+  app.put('/api/sheetMusic/bufferName', luaWrapper.getBuffer);
   //-----athorization required api-----
   app.all('/api/admin*', apiEnsureAuthenticated);
   app.all('/api/admin*', apiEnsureAdmin);

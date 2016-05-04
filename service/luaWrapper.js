@@ -8,14 +8,13 @@ var luaWrapper = {
     //router.put('/:_id', updateRecord);
 
      getBuffer: function(req, res){
-        console.log("arrived");
-        require('child_process').exec("th ./././lstm2/encode.lua -filename public/img/"+req.body.bufferName /*"./././public/img/bufferName "*/, function(error,stdout,stderr){
+        require('child_process').exec("th ./././lstm2/encode.lua -filename public/songs/"+req.body.bufferName /*"./././public/img/bufferName "*/, function(error,stdout,stderr){
             if (error) {
                         console.log(error.stack);
                         console.log('Error code: '+error.code);
                         console.log('Signal received: '+error.signal);
                      }
-             console.log(stdout);
+            //console.log(stdout);
             res.send(stdout);
         });
     }
