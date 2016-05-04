@@ -95,10 +95,17 @@ exports = module.exports = function(app, passport) {
   app.put('/api/record/delete', record.update);
   app.put('/api/record/show', record.update);
   app.post('/api/comment/insert', comment.insert);
+  app.put('/api/comment/all', comment.getAll);
+
 
   //app.put('/api/record/delete',record.update);
 
-  app.get('/api/sheetMusic/bufferName', luaWrapper.getBuffer);
+
+
+
+
+  app.put('/api/sheetMusic/bufferName', luaWrapper.getBuffer);
+  app.post('/api/generate/new', luaWrapper.generateNew);
   //-----athorization required api-----
   app.all('/api/admin*', apiEnsureAuthenticated);
   app.all('/api/admin*', apiEnsureAdmin);

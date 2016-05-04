@@ -98,7 +98,6 @@ var connectSocial = function(provider, req, res, next){
 var account = {
   getAccountDetails: function(req, res, next){
     var outcome = {};
-    
     var getAccountData = function(callback) {
       req.app.db.models.Account.findById(req.user.roles.account.id, 'name company phone zip').exec(function(err, account) {
         if (err) {

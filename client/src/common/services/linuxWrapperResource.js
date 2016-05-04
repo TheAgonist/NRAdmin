@@ -2,6 +2,7 @@ angular.module('services.linuxWrapperResource', ['security.service']).factory('l
 
   var baseUrl = '/api';
   var processResponse = function(res){
+    //console.log(res.data);
     return res.data;
   };
   var processError = function(e){
@@ -16,8 +17,11 @@ angular.module('services.linuxWrapperResource', ['security.service']).factory('l
   var resource = {};
 
   resource.getBuffer = function(buffer){
-  	return $http.get(baseUrl+'/sheetMusic/bufferName',buffer).then(processResponse,processError);
+    console.log(buffer);
+  	return $http.put(baseUrl+'/sheetMusic/bufferName',buffer).then(processResponse,processError);
   };
-
+  resource.generate = function(){
+    return $http.post(baseUrl+'/generate/new').then(processResponse,processError);
+  };
   return resource;
 }]);

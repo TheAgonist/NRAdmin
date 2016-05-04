@@ -1,4 +1,6 @@
 'use strict'
+
+var shortid = require('shortid');
 var luaWrapper = {
     //var playService = require('services/play.service');
     //var sheetMusicService = require ('services/sheetMusic.service');
@@ -8,16 +10,29 @@ var luaWrapper = {
     //router.put('/:_id', updateRecord);
 
      getBuffer: function(req, res){
-        console.log("arrived");
-        require('child_process').exec("th ./././lstm2/encode.lua -filename public/img/"+req.body.bufferName /*"./././public/img/bufferName "*/, function(error,stdout,stderr){
+        require('child_process').exec("th ./././lstm2/encode.lua -filename public/songs/"+req.body.bufferName /*"./././public/img/bufferName "*/, function(error,stdout,stderr){
             if (error) {
                         console.log(error.stack);
                         console.log('Error code: '+error.code);
                         console.log('Signal received: '+error.signal);
                      }
-             console.log(stdout);
+            //console.log(stdout);
             res.send(stdout);
         });
+    },
+    generateNew: function(req, res){
+        var filename = shortid.generate()+".mid";
+        require('child_process').exec("th ./././lstm2/sample.lua ./././lstm2/cv/beethoven.t7 -filename public/songs/"+filename, function(error,stdout,stderr){
+        if (error) {
+                    console.log(error.stack);
+                    console.log('Error code: '+error.code);
+                    console.log('Signal received: '+error.signal);
+                }
+                console.log('stdout: ' + stdout);
+                console.log('stderr: ' + stderr);
+                res.send(filename);
+
+    });
     }
 
 

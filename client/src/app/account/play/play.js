@@ -32,8 +32,8 @@ angular.module('account.play').controller('PlayCtrl', [ '$scope', '$location', '
         var records = data.account;
         var rank = 1;
         for(var record in records){
-                displayRecord(records[record], rank);
-                rank++;
+          displayRecord(records[record], rank);
+          rank++;
         }
       });
     function displayRecord(record, rank){

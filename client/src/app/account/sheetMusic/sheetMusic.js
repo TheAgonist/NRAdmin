@@ -7,24 +7,6 @@ angular.module('account.sheetMusic').config(['$routeProvider', 'securityAuthoriz
       templateUrl: 'account/sheetMusic/sheetMusic.tpl.html',
       controller: 'SheetMusicCtrl',
       title: 'SheetMusic',
-      // resolve: {
-      //   accountDetails: ['$q', '$location', 'securityAuthorization', 'accountResource' ,function($q, $location, securityAuthorization, accountResource){
-      //     //get account details only for verified-user, otherwise redirect to /account/verification
-      //     var redirectUrl;
-      //     var promise = securityAuthorization.requireVerifiedUser()
-      //       .then(accountResource.getAccountDetails, function(reason){
-      //         //rejected either user is unverified or un-authenticated
-      //         redirectUrl = reason === 'unverified-client'? '/account/verification': '/login';
-      //         return $q.reject();
-      //       })
-      //       .catch(function(){
-      //         redirectUrl = redirectUrl || '/account';
-      //         $location.path(redirectUrl);
-      //         return $q.reject();
-      //       });
-      //     return promise;
-      //   }]
-      // }
     });
 }]);
 
@@ -107,69 +89,71 @@ angular.module('account.sheetMusic').controller('SheetMusicCtrl', [ '$scope', '$
             });
           }
 // var notes = [];
-//notes = restResource.getBuffer("f.mid").then(function(response){});
-          //   notes = sheetMusicService.getBuffer('f.mid').then(function(response){
-          //   canvas.height = Math.ceil(notes.length/notesPerStave)*300;
-          //   console.log(response);
-          //   var noteList = [];
-          //   var k =0; 
-          //   var roundPitch = 0;
-          //   var highestNote=0,lowestNote=1000, nextDelta =0, globalDelta=0;
-          //   response.data.forEach(function (element, index, array){
-          //     //console.log(element);
-          //     // noteList.push(new Vex.Flow.StaveNote({ keys: ["c##/4"], duration: "q" }))
-          //     var not = new Vex.Flow.StaveNote({ keys: [element[1]], duration: element[0] });
-          //    console.log(element[1].split('#').length);
-          //     var note = element[1].split('/');
-          //     var octave = map[note[0]]*(note[1]-4);
-          //     console.log(note + "  " + octave+"   "+lowestNote+"  "+ highestNote);              
-          //     if(octave < lowestNote){
-          //       lowestNote=octave;
-          //     }
-          //     if(octave > highestNote){
-          //       highestNote = octave;
-          //     }
+var send = {
+      bufferName: "f.mid"
+    };
+    notes = restResource.getBuffer(send).then(function(data){
+            canvas.height = Math.ceil(notes.length/notesPerStave)*300;
+            console.log(response);
+            var noteList = [];
+            var k =0; 
+            var roundPitch = 0;
+            var highestNote=0,lowestNote=1000, nextDelta =0, globalDelta=0;
+            response.data.forEach(function (element, index, array){
+              //console.log(element);
+              // noteList.push(new Vex.Flow.StaveNote({ keys: ["c##/4"], duration: "q" }))
+              var not = new Vex.Flow.StaveNote({ keys: [element[1]], duration: element[0] });
+             console.log(element[1].split('#').length);
+              var note = element[1].split('/');
+              var octave = map[note[0]]*(note[1]-4);
+              console.log(note + "  " + octave+"   "+lowestNote+"  "+ highestNote);              
+              if(octave < lowestNote){
+                lowestNote=octave;
+              }
+              if(octave > highestNote){
+                highestNote = octave;
+              }
 
-          //     if(element[1].split('#').length === 2){
-          //       not. addAccidental(0, new Vex.Flow.Accidental("#"));
+              if(element[1].split('#').length === 2){
+                not. addAccidental(0, new Vex.Flow.Accidental("#"));
 
-          //     }
-          //      noteList.push(not);  
-          //     k++;
-          //     if(k%notesPerStave === 0){
-          //       //console.log(lowestNote + "   "+ highestNote);
-          //       // canvas.height=(k/notesPerStave)*100 + globalDelta + 200;
-          //       globalDelta+= 10*Math.abs(highestNote) + 10*Math.abs(nextDelta);
-          //       highestNote = 0;
-          //       nextDelta = lowestNote;
-          //       lowestNote =1000;
+              }
+               noteList.push(not);  
+              k++;
+              if(k%notesPerStave === 0){
+                //console.log(lowestNote + "   "+ highestNote);
+                // canvas.height=(k/notesPerStave)*100 + globalDelta + 200;
+                globalDelta+= 10*Math.abs(highestNote) + 10*Math.abs(nextDelta);
+                highestNote = 0;
+                nextDelta = lowestNote;
+                lowestNote =1000;
 
-          //       Vex.Flow.Formatter.FormatAndDraw(ctx, stave, noteList);
-          //       noteList = [];
-          //       stave = new Vex.Flow.Stave(0, (k/notesPerStave)*100 + globalDelta, staveWidth);
-          //       stave.addClef("treble").setContext(ctx).draw();
+                Vex.Flow.Formatter.FormatAndDraw(ctx, stave, noteList);
+                noteList = [];
+                stave = new Vex.Flow.Stave(0, (k/notesPerStave)*100 + globalDelta, staveWidth);
+                stave.addClef("treble").setContext(ctx).draw();
               
-          //     } 
-          //     //console.log(new Vex.Flow.StaveNote({ keys: [element[1]], duration: element[0] }));
-          //   }); 
-          //   if(noteList !== null){
-          //     Vex.Flow.Formatter.FormatAndDraw(ctx, stave, noteList);
-          //   }
-          //   //console.log(noteList);
-          //   return noteList;
-          // });
+              } 
+              //console.log(new Vex.Flow.StaveNote({ keys: [element[1]], duration: element[0] }));
+            }); 
+            if(noteList !== null){
+              Vex.Flow.Formatter.FormatAndDraw(ctx, stave, noteList);
+            }
+            //console.log(noteList);
+            return noteList;
+    });
           console.log(notes);
-          //notes.push(new Vex.Flow.StaveNote({ keys: ["a/9"], duration: "q" }));  
-          //notes.push((new Vex.Flow.StaveNote({ keys: ["a/4"], duration: "q" })));
-          //console.log(voice);
-          // voice.addTickables(notes);
-          // console.log(voice);
-          //Vex.Flow.Formatter.FormatAndDraw(ctx, stave, notes);
-          // Format and justify the notes to 500 pixels
-          // var formatter = new Vex.Flow.Formatter().
-          //   joinVoices([voice]).format([voice], 500);
+          notes.push(new Vex.Flow.StaveNote({ keys: ["a/9"], duration: "q" }));  
+          notes.push((new Vex.Flow.StaveNote({ keys: ["a/4"], duration: "q" })));
+          console.log(voice);
+          voice.addTickables(notes);
+          console.log(voice);
+          Vex.Flow.Formatter.FormatAndDraw(ctx, stave, notes);
+          Format and justify the notes to 500 pixels
+          var formatter = new Vex.Flow.Formatter().
+            joinVoices([voice]).format([voice], 500);
 
-          // Render voice
+          Render voice
           voice.draw(ctx, stave);
                 
       }
