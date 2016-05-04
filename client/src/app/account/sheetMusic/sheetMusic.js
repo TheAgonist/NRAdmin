@@ -32,12 +32,6 @@ angular.module('account.sheetMusic').config(['$routeProvider', 'securityAuthoriz
 
 angular.module('account.sheetMusic').controller('SheetMusicCtrl', [ '$scope', '$location', '$log', 'security', 'utility', 'linuxWrapperResource', 'SOCIAL',
   function($scope, $location, $log, security, utility, restResource, SOCIAL){
-<<<<<<< HEAD
-     initController();
-          
-        function initController(){
-=======
->>>>>>> feb538e3a31fe0f04b330b0c684a2a6933929e98
           console.log('hi');
           var notes = [];
 
@@ -151,8 +145,7 @@ notes = restResource.getBuffer("f.mid").then(function(response){});
           //       noteList = [];
           //       stave = new Vex.Flow.Stave(0, (k/notesPerStave)*100 + globalDelta, staveWidth);
           //       stave.addClef("treble").setContext(ctx).draw();
-               
-<<<<<<< HEAD
+              
           //     } 
           //     //console.log(new Vex.Flow.StaveNote({ keys: [element[1]], duration: element[0] }));
           //   }); 
@@ -177,29 +170,5 @@ notes = restResource.getBuffer("f.mid").then(function(response){});
           // //voice.draw(ctx, stave);
                 
        // });
-      }
-=======
-              } 
-              //console.log(new Vex.Flow.StaveNote({ keys: [element[1]], duration: element[0] }));
-            }); 
-            if(noteList != null)
-              Vex.Flow.Formatter.FormatAndDraw(ctx, stave, noteList);
-            //console.log(noteList);
-            return noteList;
-          });
-          console.log(notes);
-          //notes.push(new Vex.Flow.StaveNote({ keys: ["a/9"], duration: "q" }));  
-          //notes.push((new Vex.Flow.StaveNote({ keys: ["a/4"], duration: "q" })));
-          //console.log(voice);
-          // voice.addTickables(notes);
-          // console.log(voice);
-          //Vex.Flow.Formatter.FormatAndDraw(ctx, stave, notes);
-          // Format and justify the notes to 500 pixels
-          // var formatter = new Vex.Flow.Formatter().
-          //   joinVoices([voice]).format([voice], 500);
-
-          // Render voice
-          //voice.draw(ctx, stave);
->>>>>>> feb538e3a31fe0f04b330b0c684a2a6933929e98
   }
 ]);

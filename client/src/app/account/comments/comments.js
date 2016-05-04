@@ -15,7 +15,7 @@ angular.module('account.comments').config(['$routeProvider', 'securityAuthorizat
               redirectUrl = reason === 'unverified-client'? '/account/verification': '/login';
               return $q.reject();
             })
-            .catch(function(){
+            .catch(function(){  
               redirectUrl = redirectUrl || '/account';
               $location.path(redirectUrl);
               return $q.reject();
@@ -28,13 +28,27 @@ angular.module('account.comments').config(['$routeProvider', 'securityAuthorizat
 
 angular.module('account.comments').controller('CommentsCtrl', [ '$scope', '$location', '$log', 'security', 'utility', 'commentResource', 'accountResource', 'SOCIAL',
   function($scope, $location, $log, security, utility, restResource, accountResource, SOCIAL){
-    songName = $location.$$search.songName;
+    var send = {
+      song: $location.$$search.songName
+    };
+    restResource.getComments(send).then(function(data){
+      console.log(data);
+    });
+
+
     var submitDetailForm = function(){
-      restResource.setComment($scope.comment.toString());
-    }
+      var send = {
+        content: $scope.comment,
+        song: $location.$$search.songName
+      };
+      restResource.setComment(send).then(function(){
+        //console.log("ccc");
+        //$location.href = "localhost:3000/account/comments";
+      });
+    };
 
     $scope.submit = function(){
       submitDetailForm();
-    }
+    };
   }
 ]);

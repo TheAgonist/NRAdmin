@@ -95,8 +95,11 @@ exports = module.exports = function(app, passport) {
   app.put('/api/record/delete', record.update);
   app.put('/api/record/show', record.update);
   app.post('/api/comment/insert', comment.insert);
+  app.put('/api/comment/all', comment.getAll);
+
 
   //app.put('/api/record/delete',record.update);
+
 
 
 

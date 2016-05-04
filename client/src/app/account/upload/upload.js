@@ -102,7 +102,7 @@ angular.module('account.upload').controller('RecordCtrl', [ '$scope', '$location
       checkbox.id = "checkbox";
       checkbox.onclick = function OnChangeCheckbox (){
         restResource.showRecord(record);
-      }
+      };
       checkbox.checked = false;
       if(record.show == true){
         checkbox.checked = true;
