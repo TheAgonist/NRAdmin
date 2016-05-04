@@ -20,6 +20,8 @@ angular.module('services.linuxWrapperResource', ['security.service']).factory('l
     console.log(buffer);
   	return $http.put(baseUrl+'/sheetMusic/bufferName',buffer).then(processResponse,processError);
   };
-
+  resource.generate = function(){
+    return $http.post(baseUrl+'/generate/new').then(processResponse,processError);
+  };
   return resource;
 }]);

@@ -6,4 +6,5 @@ angular.module('account', [
   'account.sheetMusic',
   'account.upload',
   'account.comments',
+  'account.generate',
 ]);
