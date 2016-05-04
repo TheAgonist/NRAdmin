@@ -88,8 +88,8 @@ angular.module('account.sheetMusic').controller('SheetMusicCtrl', [ '$scope', '$
               resolution: Vex.Flow.RESOLUTION
             });
           }
-// var notes = [];
-var send = {
+    var notes = new Array();
+    var send = {
       bufferName: "f.mid"
     };
     notes = restResource.getBuffer(send).then(function(data){
@@ -149,11 +149,11 @@ var send = {
           voice.addTickables(notes);
           console.log(voice);
           Vex.Flow.Formatter.FormatAndDraw(ctx, stave, notes);
-          Format and justify the notes to 500 pixels
+         // Format and justify the notes to 500 pixels
           var formatter = new Vex.Flow.Formatter().
             joinVoices([voice]).format([voice], 500);
 
-          Render voice
+          //Render voice
           voice.draw(ctx, stave);
                 
       }
