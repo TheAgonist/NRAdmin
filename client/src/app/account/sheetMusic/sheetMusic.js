@@ -92,21 +92,21 @@ angular.module('account.sheetMusic').controller('SheetMusicCtrl', [ '$scope', '$
     var send = {
       bufferName: "f.mid"
     };
-    notes = restResource.getBuffer(send).then(function(data){
-            canvas.height = Math.ceil(notes.length/notesPerStave)*300;
+    restResource.getBuffer(send).then(function(response){
+            canvas.height = Math.ceil(notes.length/notesPerStave)*300 + 3000;
             console.log(response);
             var noteList = [];
             var k =0; 
             var roundPitch = 0;
             var highestNote=0,lowestNote=1000, nextDelta =0, globalDelta=0;
-            response.data.forEach(function (element, index, array){
+            response.forEach(function (element, index, array){
               //console.log(element);
               // noteList.push(new Vex.Flow.StaveNote({ keys: ["c##/4"], duration: "q" }))
               var not = new Vex.Flow.StaveNote({ keys: [element[1]], duration: element[0] });
-             console.log(element[1].split('#').length);
+             //console.log(element[1].split('#').length);
               var note = element[1].split('/');
               var octave = map[note[0]]*(note[1]-4);
-              console.log(note + "  " + octave+"   "+lowestNote+"  "+ highestNote);              
+              //console.log(note + "  " + octave+"   "+lowestNote+"  "+ highestNote);              
               if(octave < lowestNote){
                 lowestNote=octave;
               }
@@ -140,22 +140,23 @@ angular.module('account.sheetMusic').controller('SheetMusicCtrl', [ '$scope', '$
               Vex.Flow.Formatter.FormatAndDraw(ctx, stave, noteList);
             }
             //console.log(noteList);
-            return noteList;
-    });
-          console.log(notes);
-          notes.push(new Vex.Flow.StaveNote({ keys: ["a/9"], duration: "q" }));  
-          notes.push((new Vex.Flow.StaveNote({ keys: ["a/4"], duration: "q" })));
-          console.log(voice);
-          voice.addTickables(notes);
-          console.log(voice);
-          Vex.Flow.Formatter.FormatAndDraw(ctx, stave, notes);
-         // Format and justify the notes to 500 pixels
-          var formatter = new Vex.Flow.Formatter().
-            joinVoices([voice]).format([voice], 500);
 
-          //Render voice
-          voice.draw(ctx, stave);
-                
+           //  console.log(noteList);
+           //  noteList.push(new Vex.Flow.StaveNote({ keys: ["a/9"], duration: "q" }));  
+           //  noteList.push((new Vex.Flow.StaveNote({ keys: ["a/4"], duration: "q" })));
+           //  console.log(voice);
+           //  voice.addTickables(noteList);
+           //  console.log(voice);
+           //  Vex.Flow.Formatter.FormatAndDraw(ctx, stave, noteList);
+           // // Format and justify the notes to 500 pixels
+           //  var formatter = new Vex.Flow.Formatter().
+           //    joinVoices([voice]).format([voice], 500);
+
+            //Render voice
+            
+    });
+          
+                  //voice.draw(ctx, stave);
       }
 
 
