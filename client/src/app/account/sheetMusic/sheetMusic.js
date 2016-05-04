@@ -52,63 +52,63 @@ angular.module('account.sheetMusic').controller('SheetMusicCtrl', [ '$scope', '$
             "a#": "11",
             "b": "12"};
 
+            console.log(Vex);
 
 
-
-
-
-
-//             var canvas = $("canvas")[0];
-//             //canvas.height+=100000;  
-//             var renderer = new Vex.Flow.Renderer(canvas,
-//                 Vex.Flow.Renderer.Backends.CANVAS);
-//             var vpSize = viewport();
-//             var staveWidth = vpSize.width/2;
-//             var notesPerStave = Math.floor(staveWidth/50);
-//           var ctx = renderer.getContext();
-//           console.log(vpSize);
-//           console.log(staveWidth + "  " + notesPerStave);
-//           var stave = new Vex.Flow.Stave(0, 0, staveWidth);
-//           stave.addClef("treble").setContext(ctx).draw();
+            var canvas = $("canvas")[0];
+            // canvas.height+=100000;  
+            var renderer = new Vex.Flow.Renderer(canvas,
+                Vex.Flow.Renderer.Backends.CANVAS);
+            var vpSize = viewport();
+            console.log(vpSize);
+            canvas.width = vpSize.width/2;
+            canvas.height = vpSize.height;
+            var staveWidth = vpSize.width/2;
+            var notesPerStave = Math.floor(staveWidth/50);
+          var ctx = renderer.getContext();
+          console.log(vpSize);
+          console.log(staveWidth + "  " + notesPerStave);
+          var stave = new Vex.Flow.Stave(0, 0, staveWidth);
+          stave.addClef("treble").setContext(ctx).draw();
           
 
-//           // Create the notes
+          // Create the notes
           
 
-//           // Create a voice in 4/4
-//           // var voice = new Vex.Flow.Voice({
-//           //   num_beats: 4,
-//           //   beat_value: 4,
+          // Create a voice in 4/4
+          // var voice = new Vex.Flow.Voice({
+          //   num_beats: 4,
+          //   beat_value: 4,
 
 
-//           //   resolution: Vex.Flow.RESOLUTION
-//           // });
+          //   resolution: Vex.Flow.RESOLUTION
+          // });
 
-//           // Add notes to voice
+          // Add notes to voice
        
-//           function viewport()
-//           {
-//             var e = window;
-//             var a = 'inner';
-//             if ( !( 'innerWidth' in window ) )
-//             {
-//               a = 'client';
-//               e = document.documentElement || document.body;
-//             }
-//             return { width : e[ a+'Width' ] , height : e[ a+'Height' ] };
-//           }
+          function viewport()
+          {
+            var e = window;
+            var a = 'inner';
+            if ( !( 'innerWidth' in window ) )
+            {
+              a = 'client';
+              e = document.documentElement || document.body;
+            }
+            return { width : e[ a+'Width' ] , height : e[ a+'Height' ] };
+          }
 
 
-//           function create_4_4_voice() {
-//             return new Vex.Flow.Voice({
-//               num_beats: 4,
-//               beat_value: 4,
-//               resolution: Vex.Flow.RESOLUTION
-//             });
-//           }
-// // var notes = [];
-notes = restResource.getBuffer("f.mid").then(function(response){});
-            //notes = sheetMusicService.getBuffer('f.mid').then(function(response){
+          function create_4_4_voice() {
+            return new Vex.Flow.Voice({
+              num_beats: 4,
+              beat_value: 4,
+              resolution: Vex.Flow.RESOLUTION
+            });
+          }
+// var notes = [];
+//notes = restResource.getBuffer("f.mid").then(function(response){});
+          //   notes = sheetMusicService.getBuffer('f.mid').then(function(response){
           //   canvas.height = Math.ceil(notes.length/notesPerStave)*300;
           //   console.log(response);
           //   var noteList = [];
@@ -158,21 +158,29 @@ notes = restResource.getBuffer("f.mid").then(function(response){});
           //   //console.log(noteList);
           //   return noteList;
           // });
-          // console.log(notes);
-          // //notes.push(new Vex.Flow.StaveNote({ keys: ["a/9"], duration: "q" }));  
-          // //notes.push((new Vex.Flow.StaveNote({ keys: ["a/4"], duration: "q" })));
-          // //console.log(voice);
-          // // voice.addTickables(notes);
-          // // console.log(voice);
-          // //Vex.Flow.Formatter.FormatAndDraw(ctx, stave, notes);
-          // // Format and justify the notes to 500 pixels
-          // // var formatter = new Vex.Flow.Formatter().
-          // //   joinVoices([voice]).format([voice], 500);
+          console.log(notes);
+          //notes.push(new Vex.Flow.StaveNote({ keys: ["a/9"], duration: "q" }));  
+          //notes.push((new Vex.Flow.StaveNote({ keys: ["a/4"], duration: "q" })));
+          //console.log(voice);
+          // voice.addTickables(notes);
+          // console.log(voice);
+          //Vex.Flow.Formatter.FormatAndDraw(ctx, stave, notes);
+          // Format and justify the notes to 500 pixels
+          // var formatter = new Vex.Flow.Formatter().
+          //   joinVoices([voice]).format([voice], 500);
 
-          // // Render voice
-          // //voice.draw(ctx, stave);
+          // Render voice
+          voice.draw(ctx, stave);
                 
-       // });
       }
+
+
+      /**
+ * VexFlow 1.2.45 built on 2016-03-21.
+ * Copyright (c) 2010 Mohit Muthanna Cheppudira <mohit@muthanna.com>
+ *
+ * http://www.vexflow.com  http://github.com/0xfe/vexflow
+ */
+//# sourceMappingURL=vexflow-min.js.map
   }
 ]);

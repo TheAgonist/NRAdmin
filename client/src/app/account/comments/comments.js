@@ -28,13 +28,13 @@ angular.module('account.comments').config(['$routeProvider', 'securityAuthorizat
 
 angular.module('account.comments').controller('CommentsCtrl', [ '$scope', '$location', '$log', 'security', 'utility', 'commentResource', 'accountResource', 'SOCIAL',
   function($scope, $location, $log, security, utility, restResource, accountResource, SOCIAL){
-    songName = $location.$$search.songName;
+    var songName = $location.$$search.songName;
     var submitDetailForm = function(){
       restResource.setComment($scope.comment.toString());
-    }
+    };
 
     $scope.submit = function(){
       submitDetailForm();
-    }
+    };
   }
 ]);
