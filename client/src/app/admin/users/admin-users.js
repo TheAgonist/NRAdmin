@@ -37,7 +37,6 @@ angular.module('admin.users.index').controller('UsersIndexCtrl', ['$scope', '$ro
       $scope.items = data.items;
       $scope.pages = data.pages;
       $scope.filters = data.filters;
-      console.log($scope.filters);
       $scope.users = data.data;
     };
 
@@ -67,7 +66,6 @@ angular.module('admin.users.index').controller('UsersIndexCtrl', ['$scope', '$ro
       $scope.filters.page = $scope.pages.next;
       fetchUsers();
     };
-
     $scope.remove = function(user){
       adminResource.deleteUser(user._id,user).then(function(res){
         console.log(res);

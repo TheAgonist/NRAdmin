@@ -21,7 +21,6 @@ angular.module('services.accountResource', ['security.service']).factory('accoun
     return $http.get(baseUrl + '/account/settings').then(processResponse, processError);
   };
   resource.findAccountName = function(data){
-    console.log("here");
     return $http.get(baseUrl + '/account/find', data).then(processResponse, processError);
   };
   resource.setAccountDetails = function(data){

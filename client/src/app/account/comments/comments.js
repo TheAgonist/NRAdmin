@@ -4,7 +4,11 @@ angular.module('account.comments').config(['$routeProvider', 'securityAuthorizat
     .when('/account/comments', {
       templateUrl: 'account/comments/comments.tpl.html',
       controller: 'CommentsCtrl',
+<<<<<<< HEAD
       title: 'Add comments',
+=======
+      title: 'Play',
+>>>>>>> ffea056e0edfd68da7c41310a40b039631ff5095
       resolve: {
         accountDetails: ['$q', '$location', 'securityAuthorization', 'accountResource' ,function($q, $location, securityAuthorization, accountResource){
           //get account details only for verified-user, otherwise redirect to /account/verification

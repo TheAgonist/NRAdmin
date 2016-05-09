@@ -98,6 +98,7 @@ angular.module('account.play').controller('PlayCtrl', [ '$scope', '$location', '
       if(voted == false){
         restResource.upvote(record);
       }
+
     } 
   }
 ]);

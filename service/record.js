@@ -38,6 +38,7 @@ var record = {
  	update: function(req,res,next){
  		var workflow = req.app.utility.workflow(req, res);
  		console.log("right place right time");
+
 	    workflow.on('validate', function() {
 	      workflow.emit('patchRecord');
 	    });
@@ -45,38 +46,35 @@ var record = {
 	    workflow.on('patchRecord', function() {
 	    	var action = req.route.path;
 	    	if(action == "/api/record/upvote"){
-	    		//req.body.voters.push(req.user.username);
-	    		//console.log(req.body);
 		     	var fieldsToSet = {
 					votes: req.body.votes+1
 		    	};
 		    }
 		    if(action == "/api/record/delete"){
-		    	console.log("dddd");
 		    	var fieldsToSet = {
 					deleted: true
 		    	};
 		    }
 		    if(action == "/api/record/show"){
-		    	console.log(req.body.show);
-		    	var fieldsToSet = {
-		    		show: req.body.show
-		    	};
+		    	if(req.body.show == false){
+			    	var fieldsToSet = {
+						show: true
+			    	};
+		    	}else{
+		    		var fieldsToSet = {
+		    			show: false
+		    		};
+		    	}
 		    }
-		    //console.log(req.body);
+	    	console.log(fieldsToSet.deleted+" ||||||||||||||||||| "+req.body._id);
 	    	req.app.db.models.Record.findByIdAndUpdate(req.body._id, fieldsToSet, function(err, record) {
 		        if (err) {
+		        	console.log(err);
 		          return workflow.emit('exception', err);
 		        }
 
-		    if(action == "/api/record/upvote"){
-		     	record.voters.push(req.user.username);
-		     	req.app.db.models.Record.findByIdAndUpdate(req.body._id, {voters: record.voters}, function(err,record){
-		     		console.log(err);
-		     	});
-		    }
-
 		        workflow.outcome.record = record;
+		        console.log(record.votes);
 		        return workflow.emit('response');
 	    	});
 	    });

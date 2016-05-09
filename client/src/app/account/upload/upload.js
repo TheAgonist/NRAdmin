@@ -97,5 +97,6 @@ angular.module('account.upload').controller('RecordCtrl', [ '$scope', '$location
     $scope.closeAlert = function(key, ind){
       $scope.alerts[key].splice(ind, 1);
     }; 
+
   }
 ]);

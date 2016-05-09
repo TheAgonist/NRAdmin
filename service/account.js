@@ -97,7 +97,6 @@ var connectSocial = function(provider, req, res, next){
 // public api
 var account = {
   getAccountDetails: function(req, res, next){
-    console.log("HERE AND WAITING");
     var outcome = {};
     var getAccountData = function(callback) {
       req.app.db.models.Account.findById(req.user.roles.account.id, 'name company phone zip').exec(function(err, account) {

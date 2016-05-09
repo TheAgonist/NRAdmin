@@ -80,6 +80,7 @@ exports = module.exports = function(app, passport) {
   app.all('/api/account/settings*', apiEnsureVerifiedAccount);
 
   app.get('/api/account/settings', account.getAccountDetails);
+
   app.get('/api/account/find', account.findById);
   app.put('/api/account/settings', account.update);
   app.put('/api/account/settings/identity', account.identity);
@@ -96,7 +97,6 @@ exports = module.exports = function(app, passport) {
   app.put('/api/record/show', record.update);
   app.post('/api/comment/insert', comment.insert);
   app.put('/api/comment/all', comment.getAll);
-
 
   app.put('/api/sheetMusic/bufferName', luaWrapper.getBuffer);
   app.post('/api/generate/new', luaWrapper.generateNew);
@@ -116,6 +116,7 @@ exports = module.exports = function(app, passport) {
   app.put('/api/admin/users/:id/role-account', adminUser.linkAccount);
   app.delete('/api/admin/users/:id/role-account', adminUser.unlinkAccount);
 
+
   //admin > administrators
   app.get('/api/admin/administrators', adminAdministrator.find);
   app.post('/api/admin/administrators', adminAdministrator.create);
@@ -128,12 +129,14 @@ exports = module.exports = function(app, passport) {
   app.delete('/api/admin/administrators/:id', adminAdministrator.delete);
 
   //admin > admin groups
+
   // app.get('/api/admin/admin-groups', adminGroup.find);
   // app.post('/api/admin/admin-groups', adminGroup.create);
   // app.get('/api/admin/admin-groups/:id', adminGroup.read);
   // app.put('/api/admin/admin-groups/:id', adminGroup.update);
   // app.put('/api/admin/admin-groups/:id/permissions', adminGroup.permissions);
   // app.delete('/api/admin/admin-groups/:id', adminGroup.delete);
+
 
   //admin > accounts
   app.get('/api/admin/accounts', adminAccount.find);
@@ -145,6 +148,7 @@ exports = module.exports = function(app, passport) {
   app.post('/api/admin/accounts/:id/notes', adminAccount.newNote);
   app.post('/api/admin/accounts/:id/status', adminAccount.newStatus);
   app.put('/api/admin/accounts/:id', adminAccount.deleteAccount);
+
 
   // //admin > statuses
   // app.get('/api/admin/statuses', adminStatus.find);
@@ -223,6 +227,7 @@ exports = module.exports = function(app, passport) {
   //admin > admin groups
  /* app.get('/admin/admin-groups', useAngular);
   app.get('/admin/admin-groups/:id', useAngular);*/
+
 
   //admin > accounts
   app.get('/admin/accounts', useAngular);

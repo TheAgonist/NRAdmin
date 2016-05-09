@@ -68,12 +68,30 @@ angular.module('admin.accounts.index').controller('AccountsIndexCtrl', ['$scope'
       $scope.filters.page = $scope.pages.next;
       fetchAccounts();
     };
+<<<<<<< HEAD
 
     $scope.remove = function(id){
       adminResource.deleteAccount(id).then(function(res){
         console.log(res);
       });
     }
+=======
+    $scope.addAccount = function(){
+      adminResource.addAccount($scope.fullname).then(function(data){
+        $scope.fullname = '';
+        if(data.success){
+          $route.reload();
+        }else if (data.errors && data.errors.length > 0){
+          alert(data.errors[0]);
+        }else {
+          alert('unknown error.');
+        }
+      }, function(e){
+        $scope.fullname = '';
+        $log.error(e);
+      });
+    };
+>>>>>>> ffea056e0edfd68da7c41310a40b039631ff5095
 
     // $scope vars
     //select elements and their associating options
@@ -82,7 +100,13 @@ angular.module('admin.accounts.index').controller('AccountsIndexCtrl', ['$scope'
       {label: "id \u25B2", value: "_id"},
       {label: "id \u25BC", value: "-_id"},
       {label: "name \u25B2", value: "name"},
+<<<<<<< HEAD
       {label: "name \u25BC", value: "-name"}
+=======
+      {label: "name \u25BC", value: "-name"},
+      {label: "company \u25B2", value: "company"},
+      {label: "company \u25BC", value: "-company"}
+>>>>>>> ffea056e0edfd68da7c41310a40b039631ff5095
     ];
     $scope.limits = [
       {label: "10 items", value: 10},
