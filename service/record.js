@@ -56,15 +56,9 @@ var record = {
 		    	};
 		    }
 		    if(action == "/api/record/show"){
-		    	if(req.body.show == false){
 			    	var fieldsToSet = {
-						show: true
+						show: req.body.show
 			    	};
-		    	}else{
-		    		var fieldsToSet = {
-		    			show: false
-		    		};
-		    	}
 		    }
 	    	console.log(fieldsToSet.deleted+" ||||||||||||||||||| "+req.body._id);
 	    	req.app.db.models.Record.findByIdAndUpdate(req.body._id, fieldsToSet, function(err, record) {
