@@ -380,6 +380,10 @@ var account = {
 
     workflow.emit('validate');
   },
+  findById: function(req, res, next) {
+    console.log(req);
+    //req.app.db.modelsUser.findById()
+  },
   upsertVerification: function(req, res, next){
     var workflow = req.app.utility.workflow(req, res);
 

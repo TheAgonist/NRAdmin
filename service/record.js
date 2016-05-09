@@ -1,50 +1,44 @@
  'use strict';
 var record = {
-	getRecordDetails: function(req,res,next){
-		var outcome = {};
-		var getAllRecordsData = function(callback) {
-	    req.app.db.models.Record.find({'deleted': false, 'show': true}).sort({ votes: -1 }).exec(function(err, account) {
-	    	if (err) {
-	        	return callback(err, null);
-	        }
 
-	        outcome.account = account;
-	        callback(null, 'done');
-	      });
-	    };
-	    var asyncFinally = function(err, results) {
+	find: function (req, res, next) {
+	    req.query.name = req.query.name ? req.query.name : '';
+	    req.query.limit = req.query.limit ? parseInt(req.query.limit, null) : 20;
+	    req.query.page = req.query.page ? parseInt(req.query.page, null) : 1;
+	    req.query.sort = req.query.sort ? req.query.sort : '-votes';
+
+	    var filters = {};
+	    if (req.query.name) {
+	      filters.name = new RegExp('^.*?' + req.query.name + '.*$', 'i');
+	    }
+	    //console.log(req.route.path)
+	    if(req.route.path == '/api/record/records'){
+	    	//console.log("noupppp");
+	    	filters.show = true;
+	    }
+	    if(req.route.path == '/api/record/user'){
+	    	filters.user = req.user.username;
+	    }
+	    //console.log(filters.user);
+	    filters.deleted = false;
+	    req.app.db.models.Record.pagedFind({
+	      filters: filters,
+	      keys: 'votes name show showName user voters',
+	      limit: req.query.limit,
+	      page: req.query.page,
+	      sort: req.query.sort
+	    }, function (err, results) {
 	      if (err) {
 	        return next(err);
 	      }
-	      res.status(200).json(outcome);
-	    };
-
-    	require('async').parallel([getAllRecordsData], asyncFinally);
- 	},
- 	getUserRecordDetails: function(req,res,next){
-		var outcome = {};
-		var getUserRecordsData = function(callback) {
-			//console.log(req.session.passport.user);
-	    	req.app.db.models.Record.find({'user': req.session.passport.user}).sort({ votes: -1 }).exec(function(err, account) {
-	        	if (err) {
-	            	return callback(err, null);
-	        	}
-	        	outcome.account = account;
-	        	callback(null, 'done');
-	      	});
-	    };
-	    var asyncFinally = function(err, results) {
-	    	if (err) {
-	        	return next(err);
-	      	}
-	      	res.status(200).json(outcome);
-	    };
-
-    	require('async').parallel([getUserRecordsData], asyncFinally);
- 	},
+	      results.filters = req.query;
+	      res.status(200).json(results);
+	    });
+	},
  	update: function(req,res,next){
  		var workflow = req.app.utility.workflow(req, res);
- 		console.log(req.app);
+ 		console.log("right place right time");
+
 	    workflow.on('validate', function() {
 	      workflow.emit('patchRecord');
 	    });

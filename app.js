@@ -59,27 +59,34 @@ app.use(passport.session());
 var busboy = require('connect-busboy'),
     fs = require('fs-extra');
 var record = require('./service/record');
-
+var record = require('./service/account');
 app.use(busboy());
+var shortid = require('shortid');
 app.route('/upload').post(function(req, res, next){
   var fstream;
   req.pipe(req.busboy);
   req.busboy.on('file', function (fieldname, file, filename) {
     console.log("Uploading: " + filename);
-
+    var fileName = filename.split(".");
     //Path where image will be uploaded
-    fstream = fs.createWriteStream(__dirname + '/public/songs/' + filename);
+    var saveName = shortid.generate() + ".mid";
+    fstream = fs.createWriteStream(__dirname + '/public/songs/' + saveName);
     file.pipe(fstream);
     fstream.on('close', function () {
-      var set = {
-          name: filename,
-          user: req.session.passport.user,
-          show: false,
-          votes: 0,
-          delete: false,
-      };
-      req.app.db.models.Record.create(set);
-      res.redirect('http://localhost:3000/account/upload');           //where to go next
+      //console.log(req.app.db.models.Account);
+      req.app.db.models.User.findById(req.session.passport.user).then(function(result){
+        var set = {
+            name: saveName,
+            showName: fileName[0],
+            user: result.username,
+            show: false,
+            votes: 0,
+            delete: false,
+        };
+        console.log(set);
+        req.app.db.models.Record.create(set);
+        res.redirect('http://localhost:3000/account/upload');           //where to go next
+      });
     });
   });
 });

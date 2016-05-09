@@ -407,20 +407,15 @@ var account = {
     workflow.emit('validate');
   },
 
-  delete: function(req, res, next){
+  deleteAccount: function(req, res, next){
     var workflow = req.app.utility.workflow(req, res);
-
     workflow.on('validate', function() {
-      if (!req.user.roles.admin.isMemberOf('root')) {
-        workflow.outcome.errors.push('You may not delete accounts.');
-        return workflow.emit('response');
-      }
-
+      console.log("cccvvdfbfgbergfewfsdvdfvdfbxbcvbsdfbdsfdfc");
       workflow.emit('deleteAccount');
     });
 
     workflow.on('deleteAccount', function(err) {
-      req.app.db.models.Account.findByIdAndRemove(req.params.id, function(err, account) {
+      req.app.db.models.Account.findByIdAndUpdate(req.params.id,{deleted: true}, function(err, account) {
         if (err) {
           return workflow.emit('exception', err);
         }

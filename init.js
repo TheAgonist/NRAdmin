@@ -198,6 +198,7 @@ workflow.on('initDb', function(){
           username: workflow.admin.username,
           password: hash,
           isActive: 'yes',
+          deleted: false,
           email: workflow.admin.email,
           roles: {
             admin: admin._id,

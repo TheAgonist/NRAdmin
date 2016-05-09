@@ -7,9 +7,9 @@ var admin = require('./service/admin/admin');
 var adminUser = require('./service/admin/user');
 var adminAccount = require('./service/admin/account');
 var adminAdministrator = require('./service/admin/administrator');
-var adminGroup = require('./service/admin/admin-group');
-var adminStatus = require('./service/admin/status');
-var adminCategory = require('./service/admin/category');
+//var adminGroup = require('./service/admin/admin-group');
+//var adminStatus = require('./service/admin/status');
+//var adminCategory = require('./service/admin/category');
 var record = require('./service/record');
 var luaWrapper = require('./service/luaWrapper');
 var comment = require('./service/comment');
@@ -80,7 +80,8 @@ exports = module.exports = function(app, passport) {
   app.all('/api/account/settings*', apiEnsureVerifiedAccount);
 
   app.get('/api/account/settings', account.getAccountDetails);
-  app.get('/api/account/find', account.getAccountDetails);
+
+  app.get('/api/account/find', account.findById);
   app.put('/api/account/settings', account.update);
   app.put('/api/account/settings/identity', account.identity);
   app.put('/api/account/settings/password', account.password);
@@ -89,20 +90,13 @@ exports = module.exports = function(app, passport) {
   app.get('/api/account/settings/facebook/callback', account.connectFacebook);
   app.get('/api/account/settings/facebook/disconnect', account.disconnectFacebook);
 
-  app.get('/api/record/all', record.getRecordDetails);
-  app.get('/api/record/user', record.getUserRecordDetails);
+  app.get('/api/record/records', record.find);
+  app.get('/api/record/user', record.find);
   app.put('/api/record/upvote', record.update);
   app.put('/api/record/delete', record.update);
   app.put('/api/record/show', record.update);
   app.post('/api/comment/insert', comment.insert);
   app.put('/api/comment/all', comment.getAll);
-
-
-  //app.put('/api/record/delete',record.update);
-
-
-
-
 
   app.put('/api/sheetMusic/bufferName', luaWrapper.getBuffer);
   app.post('/api/generate/new', luaWrapper.generateNew);
@@ -121,7 +115,7 @@ exports = module.exports = function(app, passport) {
   app.delete('/api/admin/users/:id/role-admin', adminUser.unlinkAdmin);
   app.put('/api/admin/users/:id/role-account', adminUser.linkAccount);
   app.delete('/api/admin/users/:id/role-account', adminUser.unlinkAccount);
-  app.delete('/api/admin/users/:id', adminUser.delete);
+
 
   //admin > administrators
   app.get('/api/admin/administrators', adminAdministrator.find);
@@ -135,12 +129,14 @@ exports = module.exports = function(app, passport) {
   app.delete('/api/admin/administrators/:id', adminAdministrator.delete);
 
   //admin > admin groups
-  app.get('/api/admin/admin-groups', adminGroup.find);
-  app.post('/api/admin/admin-groups', adminGroup.create);
-  app.get('/api/admin/admin-groups/:id', adminGroup.read);
-  app.put('/api/admin/admin-groups/:id', adminGroup.update);
-  app.put('/api/admin/admin-groups/:id/permissions', adminGroup.permissions);
-  app.delete('/api/admin/admin-groups/:id', adminGroup.delete);
+
+  // app.get('/api/admin/admin-groups', adminGroup.find);
+  // app.post('/api/admin/admin-groups', adminGroup.create);
+  // app.get('/api/admin/admin-groups/:id', adminGroup.read);
+  // app.put('/api/admin/admin-groups/:id', adminGroup.update);
+  // app.put('/api/admin/admin-groups/:id/permissions', adminGroup.permissions);
+  // app.delete('/api/admin/admin-groups/:id', adminGroup.delete);
+
 
   //admin > accounts
   app.get('/api/admin/accounts', adminAccount.find);
@@ -151,7 +147,8 @@ exports = module.exports = function(app, passport) {
   app.delete('/api/admin/accounts/:id/user', adminAccount.unlinkUser);
   app.post('/api/admin/accounts/:id/notes', adminAccount.newNote);
   app.post('/api/admin/accounts/:id/status', adminAccount.newStatus);
-  app.delete('/api/admin/accounts/:id', adminAccount.delete);
+  app.put('/api/admin/accounts/:id', adminAccount.deleteAccount);
+
 
   // //admin > statuses
   // app.get('/api/admin/statuses', adminStatus.find);
@@ -228,8 +225,9 @@ exports = module.exports = function(app, passport) {
   app.get('/admin/administrators/:id', useAngular);
 
   //admin > admin groups
-  app.get('/admin/admin-groups', useAngular);
-  app.get('/admin/admin-groups/:id', useAngular);
+ /* app.get('/admin/admin-groups', useAngular);
+  app.get('/admin/admin-groups/:id', useAngular);*/
+
 
   //admin > accounts
   app.get('/admin/accounts', useAngular);

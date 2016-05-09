@@ -15,9 +15,7 @@ var user = {
       filters.username = new RegExp('^.*?' + req.query.username + '.*$', 'i');
     }
 
-    if (req.query.isActive) {
-      filters.isActive = req.query.isActive;
-    }
+    filters.deleted = false;
 
     if (req.query.roles && req.query.roles === 'admin') {
       filters['roles.admin'] = {$exists: true};
@@ -29,10 +27,10 @@ var user = {
 
     req.app.db.models.User.pagedFind({
       filters: filters,
-      keys: 'username email isActive',
+      keys: 'username email',
       limit: req.query.limit,
       page: req.query.page,
-      sort: req.query.sort
+      sort: req.query.sort,
     }, function (err, results) {
       if (err) {
         return next(err);
@@ -606,37 +604,6 @@ var user = {
 
           workflow.emit('response');
         });
-      });
-    });
-
-    workflow.emit('validate');
-  },
-
-  delete: function(req, res, next){
-    var workflow = req.app.utility.workflow(req, res);
-
-    workflow.on('validate', function() {
-      if (!req.user.roles.admin.isMemberOf('root')) {
-        workflow.outcome.errors.push('You may not delete users.');
-        return workflow.emit('response');
-      }
-
-      // work around as typeof req.user._id === "Object"
-      if (req.user._id + '' === req.params.id) {
-        workflow.outcome.errors.push('You may not delete yourself from user.');
-        return workflow.emit('response');
-      }
-
-      workflow.emit('deleteUser');
-    });
-
-    workflow.on('deleteUser', function(err) {
-      req.app.db.models.User.findByIdAndRemove(req.params.id, function(err, user) {
-        if (err) {
-          return workflow.emit('exception', err);
-        }
-
-        workflow.emit('response');
       });
     });
 
