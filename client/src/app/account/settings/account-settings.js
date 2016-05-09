@@ -28,10 +28,6 @@ angular.module('account.settings').config(['$routeProvider', 'securityAuthorizat
 angular.module('account.settings').controller('AccountSettingsCtrl', [ '$scope', '$location', '$log', 'security', 'utility', 'accountResource', 'accountDetails', 'SOCIAL',
   function($scope, $location, $log, security, utility, restResource, accountDetails, SOCIAL){
     //local vars
-<<<<<<< HEAD
-    console.log($scope);
-=======
->>>>>>> ffea056e0edfd68da7c41310a40b039631ff5095
     var account = accountDetails.account;
     var user = accountDetails.user;
     var submitDetailForm = function(){
