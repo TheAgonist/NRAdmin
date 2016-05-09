@@ -21,102 +21,84 @@ angular.module('account.play').config(['$routeProvider', 'securityAuthorizationP
               return $q.reject();
             });
           return promise;
+        }],
+        records: ['$location', 'recordResource', function($location, recordResource){
+          //get app stats only for admin-user, otherwise redirect to /account
+              return recordResource.getAllRecords($location.search());
         }]
-      }
+      },
+      reloadOnSearch: false
     });
 }]);
 
-angular.module('account.play').controller('PlayCtrl', [ '$scope', '$location', '$log', 'security', 'utility', 'recordResource', 'accountResource', 'SOCIAL',
-  function($scope, $location, $log, security, utility, restResource, accountResource, SOCIAL){
-    restResource.getRecordDetails().then(function(data){
-        var records = data.account;
-        var rank = 1;
-        for(var record in records){
-          displayRecord(records[record], rank);
-          rank++;
+angular.module('account.play').controller('PlayCtrl', [ '$scope', '$location', '$log', 'security', 'utility', 'recordResource', 'accountDetails', 'SOCIAL', 'records',
+  function($scope, $location, $log, security, utility, restResource, account, SOCIAL, data){
+    //console.log(account);
+    var deserializeData = function(data){
+      $scope.items = data.items;
+      $scope.pages = data.pages;
+      $scope.filters = data.filters;
+      $scope.records = data.data;
+    };
+
+    var fetchRecords = function(){
+      restResource.getAllRecords($scope.filters).then(function(data){
+        deserializeData(data);
+
+        //update url in browser addr bar
+        $location.search($scope.filters);
+      }, function(e){
+        $log.error(e);
+      });
+    };
+
+    // $scope methods
+    $scope.canSave = utility.canSave;
+    $scope.filtersUpdated = function(){
+      //reset pagination after filter(s) is updated
+      $scope.filters.page = undefined;
+      fetchRecords();
+    };
+    $scope.prev = function(){
+      $scope.filters.page = $scope.pages.prev;
+      fetchRecords();
+    };
+    $scope.next = function(){
+      $scope.filters.page = $scope.pages.next;
+      fetchRecords();
+    };
+    //console.log(sess);
+    // $scope vars
+    //select elements and their associating options
+    $scope.sorts = [
+      {label: "votes \u25B2", value: "votes"},
+      {label: "votes \u25BC", value: "-votes"}
+    ];
+    $scope.limits = [
+      {label: "10 items", value: 10},
+      {label: "20 items", value: 20},
+      {label: "50 items", value: 50},
+      {label: "100 items", value: 100}
+    ];
+
+    //initialize $scope variables
+    deserializeData(data);
+
+    $scope.redirect = function(record) {
+      $location.url("account/comments?songName="+record.name);
+    }
+
+    $scope.upvote = function(record){
+      var voted = false;
+      for(var voter in record.voters){
+        if(record.voters[voter] == account.user.username || record.user == account.user.username){
+          voted = true;
         }
-      });
-    function displayRecord(record, rank){
-      var first = document.createElement("TD");
-      first.innerHTML = rank;
-      var second = document.createElement("TD");
-      second.innerHTML = record.name;
-      var third = document.createElement("TD");
-      accountResource.getAccountDetails(record.user).then(function(data){
-        third.innerHTML = data.user.username;
-      });
-      var fourth = document.createElement("TD");
-      fourth.innerHTML = record.votes;
-      var fifth = document.createElement("TD");
-      var upvote = createUpvoteButton(record);
-      fifth.appendChild(upvote);
-      var sixth = document.createElement("TD");
-      var play = createPlayButton(record);
-      sixth.appendChild(play);
-      var seventh = document.createElement("TD");
-      var sheetButton = createSheetButton(record);
-      seventh.appendChild(sheetButton);
-      var delButton = createDeleteButton(record);
-      var eighth = document.createElement("TD");
-      eighth.appendChild(delButton);
-      var row = document.createElement("TR");
-      row.id = "row";
-      row.appendChild(first);
-      row.appendChild(second);
-      row.appendChild(third);
-      row.appendChild(fourth);
-      row.appendChild(fifth);
-      row.appendChild(sixth);
-      row.appendChild(seventh);
-      /*if(curUser.role == "mod"){
-          row.appendChild(eighth);
-      }*/
-      var table = document.getElementById("listRecords");
-      table.appendChild(row);
-    }
+      }
+      if(voted == false){
+        restResource.upvote(record);
+      }
 
-    function createDeleteButton(record){
-      var del = document.createElement("BUTTON");
-      del.id = "deleteButton";
-      /*del.onclick = function(){
-          PlayService.deleteRecord(record);
-      }*/
-      del.innerHTML = "delete";
-      return del;
-    }
-
-    function createSheetButton(record){
-      var sheet = document.createElement("BUTTON");
-      sheet.id = "sheetButton";
-      sheet.onclick = function() {
-          location.href ='./sheetMusic?bufferName='+record.name;
-      };
-      sheet.innerHTML = "Show sheet music";
-      return sheet;
-    }
-
-    function createUpvoteButton(record){
-      var upvote = document.createElement("BUTTON");
-      upvote.id = "upvoteButton";
-      upvote.onclick = function() {
-          upvoteFunc(record);
-           };
-      upvote.innerHTML = "UPVOTE";
-      return upvote;
-    }
-
-    function createPlayButton(record){
-      var play = document.createElement("BUTTON");
-      play.id = "playButton";
-      play.onclick = function() {
-                  location.href ='./comments?songName='+record.name;
-      };
-      play.innerHTML = "PLAY";
-      return play;
-    }
-
-    function upvoteFunc(record){
-      restResource.upvote(record);
     } 
   }
 ]);

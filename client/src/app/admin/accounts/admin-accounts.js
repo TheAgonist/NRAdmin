@@ -55,10 +55,6 @@ angular.module('admin.accounts.index').controller('AccountsIndexCtrl', ['$scope'
 
     // $scope methods
     $scope.canSave = utility.canSave;
-    $scope.formatTime = function(timestamp, replace){
-      var res = moment(timestamp).from();
-      return replace? res.replace('ago', replace): res;
-    };
     $scope.filtersUpdated = function(){
       //reset pagination after filter(s) is updated
       $scope.filters.page = undefined;
@@ -72,21 +68,11 @@ angular.module('admin.accounts.index').controller('AccountsIndexCtrl', ['$scope'
       $scope.filters.page = $scope.pages.next;
       fetchAccounts();
     };
-    $scope.addAccount = function(){
-      adminResource.addAccount($scope.fullname).then(function(data){
-        $scope.fullname = '';
-        if(data.success){
-          $route.reload();
-        }else if (data.errors && data.errors.length > 0){
-          alert(data.errors[0]);
-        }else {
-          alert('unknown error.');
-        }
-      }, function(e){
-        $scope.fullname = '';
-        $log.error(e);
+    $scope.remove = function(id){
+      adminResource.deleteAccount(id).then(function(res){
+        console.log(res);
       });
-    };
+    }
 
     // $scope vars
     //select elements and their associating options
@@ -95,9 +81,7 @@ angular.module('admin.accounts.index').controller('AccountsIndexCtrl', ['$scope'
       {label: "id \u25B2", value: "_id"},
       {label: "id \u25BC", value: "-_id"},
       {label: "name \u25B2", value: "name"},
-      {label: "name \u25BC", value: "-name"},
-      {label: "company \u25B2", value: "company"},
-      {label: "company \u25BC", value: "-company"}
+      {label: "name \u25BC", value: "-name"}
     ];
     $scope.limits = [
       {label: "10 items", value: 10},

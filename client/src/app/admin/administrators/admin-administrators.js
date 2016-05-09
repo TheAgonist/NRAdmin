@@ -66,21 +66,6 @@ angular.module('admin.administrators.index').controller('AdministratorsIndexCtrl
       $scope.filters.page = $scope.pages.next;
       fetchAdministrators();
     };
-    $scope.addAdmin = function(){
-      adminResource.addAdministrator($scope.fullname).then(function(data){
-        $scope.fullname = '';
-        if(data.success){
-          $route.reload();
-        }else if (data.errors && data.errors.length > 0){
-          alert(data.errors[0]);
-        }else {
-          alert('unknown error.');
-        }
-      }, function(e){
-        $scope.fullname = '';
-        $log.error(e);
-      });
-    };
 
     // $scope vars
     //select elements and their associating options

@@ -4,7 +4,7 @@ angular.module('account.comments').config(['$routeProvider', 'securityAuthorizat
     .when('/account/comments', {
       templateUrl: 'account/comments/comments.tpl.html',
       controller: 'CommentsCtrl',
-      title: 'Play',
+      title: 'Add comments',
       resolve: {
         accountDetails: ['$q', '$location', 'securityAuthorization', 'accountResource' ,function($q, $location, securityAuthorization, accountResource){
           //get account details only for verified-user, otherwise redirect to /account/verification
@@ -26,8 +26,8 @@ angular.module('account.comments').config(['$routeProvider', 'securityAuthorizat
     });
 }]);
 
-angular.module('account.comments').controller('CommentsCtrl', [ '$scope', '$location', '$log', 'security', 'utility', 'commentResource', 'accountResource', 'SOCIAL',
-  function($scope, $location, $log, security, utility, restResource, accountResource, SOCIAL){
+angular.module('account.comments').controller('CommentsCtrl', [ '$scope', '$location', '$log', 'security', 'utility', 'commentResource', 'accountResource', 'SOCIAL', 'ngAudio',
+  function($scope, $location, $log, security, utility, restResource, accountResource, SOCIAL, audio){
 
     var send = {
       song: $location.$$search.songName
@@ -35,7 +35,6 @@ angular.module('account.comments').controller('CommentsCtrl', [ '$scope', '$loca
     restResource.getComments(send).then(function(data){
       console.log(data);
     });
-
 
     var submitDetailForm = function(){
       var send = {

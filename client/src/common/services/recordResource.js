@@ -13,20 +13,23 @@ angular.module('services.recordResource', ['security.service']).factory('recordR
   };
   // public api
   var resource = {};
-  resource.getRecordDetails = function(){
-    return $http.get(baseUrl + '/record/all').then(processResponse, processError);
+  resource.getAllRecords = function(filters){
+    //console.log("HERE FINALLY");
+    return $http.get(baseUrl + '/record/records', { params: filters }).then(processResponse, processError);
   };
   resource.upvote = function(record){
     return $http.put(baseUrl + '/record/upvote', record).then(processResponse, processError);
   };
   resource.showRecord = function(record){
+    console.log(record);
     return $http.put(baseUrl + '/record/show', record).then(processResponse, processError);
   };
   resource.deleteRecord = function(record){
+    console.log(record);
     return $http.put(baseUrl + '/record/delete', record).then(processResponse, processError);
   };
-  resource.getUserRecordDetails = function(){
-    return $http.get(baseUrl + '/record/user').then(processResponse, processError);
+  resource.getAllUserRecords = function(filters){
+    return $http.get(baseUrl + '/record/user', { params: filters }).then(processResponse, processError);
   };
   return resource;
 }]);

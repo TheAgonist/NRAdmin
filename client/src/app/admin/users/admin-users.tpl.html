@@ -12,21 +12,13 @@
                 <div class="col-sm-2">
                     <label>Sort By</label>
                     <select name="sort" class="form-control" ng-model="filters.sort" ng-model-options="{ debounce: 500 }" ng-options="sort.value as sort.label for sort in sorts" ng-change="filtersUpdated()">
-                        <!--<option value="_id">id &#9650;</option>-->
-                        <!--<option value="-_id">id &#9660;</option>-->
-                        <!--<option value="username">username &#9650;</option>-->
-                        <!--<option value="-username">username &#9660;</option>-->
-                        <!--<option value="email">email &#9650;</option>-->
-                        <!--<option value="-email">email &#9660;</option>-->
+
                     </select>
                 </div>
                 <div class="col-sm-2">
                     <label>Limit</label>
                     <select name="limit" class="form-control" ng-model="filters.limit" ng-model-options="{ debounce: 500 }" ng-options="limit.value as limit.label for limit in limits" ng-change="filtersUpdated()">
-                        <!--<option value="10">10 items</option>-->
-                        <!--<option value="20" selected="selected">20 items</option>-->
-                        <!--<option value="50">50 items</option>-->
-                        <!--<option value="100">100 items</option>-->
+
                     </select>
                 </div>
             </div>
@@ -42,7 +34,8 @@
             </thead>
             <tbody>
                 <tr ng-repeat="user in users">
-                    <td><a class="btn btn-default btn-sm" ng-href="">Delete</a></td>
+                    <td><a class="btn btn-default btn-sm" ng-click="remove(user)">Delete</a></td>
+
                     <td ng-bind="user.username"></td>
                     <td ng-bind="user.email"></td>
                     <td ng-bind="user._id"></td>

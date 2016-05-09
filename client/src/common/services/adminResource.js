@@ -41,7 +41,7 @@ angular.module('services.adminResource', []).factory('adminResource', ['$http', 
     var url = userUrl + '/' + _id;
     return $http.get(url).then(processResponse, processError);
   };
-  resource.updateUser = function(_id, data){
+  resource.deleteUser = function(_id, data){
     var url = userUrl + '/' + _id;
     return $http.put(url, data).then(processResponse, processError);
   };
@@ -63,10 +63,6 @@ angular.module('services.adminResource', []).factory('adminResource', ['$http', 
   };
   resource.unlinkAccount = function(_id){
     var url = userUrl + '/' + _id + '/role-account';
-    return $http.delete(url).then(processResponse, processError);
-  };
-  resource.deleteUser = function(_id){
-    var url = userUrl + '/' + _id;
     return $http.delete(url).then(processResponse, processError);
   };
 
@@ -106,7 +102,8 @@ angular.module('services.adminResource', []).factory('adminResource', ['$http', 
   };
   resource.deleteAccount = function(_id){
     var url = accountUrl + '/' + _id;
-    return $http.delete(url).then(processResponse, processError);
+    console.log(url);
+    return $http.put(url).then(processResponse, processError);
   };
 
   // ----- administrators api -----

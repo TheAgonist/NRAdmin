@@ -66,27 +66,15 @@ angular.module('admin.users.index').controller('UsersIndexCtrl', ['$scope', '$ro
       $scope.filters.page = $scope.pages.next;
       fetchUsers();
     };
-    $scope.addUser = function(){
-      adminResource.addUser($scope.username).then(function(data){
-        $scope.username = '';
-        if(data.success){
-          $route.reload();
-        }else if (data.errors && data.errors.length > 0){
-          alert(data.errors[0]);
-        }else {
-          alert('unknown error.');
-        }
-      }, function(e){
-        $scope.username = '';
-        $log.error(e);
+    $scope.remove = function(user){
+      adminResource.deleteUser(user._id,user).then(function(res){
+        console.log(res);
       });
     };
 
     // $scope vars
     //select elements and their associating options
-    $scope.roles = [{label: "any", value: ""}, {label: "admin", value: "admin"}, {label: "account", value: "account"}];
-    $scope.isActives =[{label: "either", value: ""}, {label: "yes", value: "yes"}, {label: "no", value: "no"}];
-    $scope.sorts = [
+   $scope.sorts = [
       {label: "id \u25B2", value: "_id"},
       {label: "id \u25BC", value: "-_id"},
       {label: "username \u25B2", value: "username"},

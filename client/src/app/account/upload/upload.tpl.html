@@ -1,15 +1,61 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="page-header"><h1>Upload</h1></div>
-        <div id="showYourRecords" class="w3-responsive">
-			<table id="listRecords"  class="w3-table w3-bordered w3-xlarge">
-				<tr>
-				  <th>Name</th>
-				  <th>Votes</th>
-				  <th></th>
-				  <th></th>
-				</tr>
-			</table>
+        <alert ng-repeat="alert in alerts.detail" type="{{alert.type}}" close="closeAlert('detail', $index)">{{alert.msg}}</alert>
+        <form class="filters">
+            <div class="row">
+                <div class="col-sm-4">
+                    <label>Name Search</label>
+                    <input name="search" type="text" class="form-control" ng-model="filters.name" ng-model-options="{ debounce: 500 }" ng-change="filtersUpdated()">
+                </div>
+                <div class="col-sm-4">
+                    <label>Sort By</label>
+                    <select name="sort" class="form-control" ng-model="filters.sort" ng-model-options="{ debounce: 500 }" ng-options="sort.value as sort.label for sort in sorts" ng-change="filtersUpdated()">
+                    </select>
+                </div>
+                <div class="col-sm-4">
+                    <label>Limit</label>
+                    <select name="limit" class="form-control" ng-model="filters.limit" ng-model-options="{ debounce: 500 }" ng-options="limit.value as limit.label for limit in limits" ng-change="filtersUpdated()">
+                    </select>
+                </div>
+            </div>
+        </form>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th class="stretch">name</th>
+                <th>Votes</th>
+                <th>show</h>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="record in records">
+                <td class="nowrap" ng-bind="record.showName"></td>
+                <td ng-bind="record.votes"></td>
+                <td><input type="checkbox" ng-model="record.show" ng-change="show(record)"></td>
+                <td><a class="btn btn-default btn-sm" href="./comments?songName=record.name">Play</a></td>
+                <td><a class="btn btn-default btn-sm" href="./sheetMusic?bufferName=+record.name">sheetMusic</a></td>
+                <td><a class="btn btn-default btn-sm" ng-click="remove(record)" href="javascript:location.reload(true)">Delete</a></td>
+            </tr>
+            <tr ng-show="records.length === 0">
+                <td colspan="3">no documents matched</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="well" ng-if="pages.total > 1">
+            <div class="btn-group pull-left">
+                <button disabled class="btn btn-default">Page {{pages.current}} of {{pages.total}}</button>
+                <button disabled class="btn btn-default">Rows {{items.begin}} - {{items.end}} of {{items.total}}</button>
+            </div>
+            <div class="btn-group pull-right">
+                <button class="btn btn-default" ng-class="{disabled: !pages.hasPrev}" ng-click="prev()">Prev</button>
+                <button class="btn btn-default" ng-class="{disabled: !pages.hasNext}" ng-click="next()"> Next</button>
+            </div>
+            <div class="clearfix"></div>
+        </div>
 		</div>
 		<form method='post' action='/upload' enctype="multipart/form-data">
 		        <input type='file' name='fileUploaded' accept='.mid'>

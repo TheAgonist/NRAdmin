@@ -6,119 +6,97 @@ angular.module('account.upload').config(['$routeProvider', 'securityAuthorizatio
       controller: 'RecordCtrl',
       title: 'Upload',
       resolve: {
-        accountDetails: ['$q', '$location', 'securityAuthorization', 'accountResource' ,function($q, $location, securityAuthorization, accountResource){
-          //get account details only for verified-user, otherwise redirect to /account/verification
+        records: ['$q', '$location', '$log', 'securityAuthorization', 'recordResource', function($q, $location, $log, securityAuthorization, recordResource){
+          //get app stats only for admin-user, otherwise redirect to /account
           var redirectUrl;
           var promise = securityAuthorization.requireVerifiedUser()
-            .then(accountResource.getAccountDetails, function(reason){
-              //rejected either user is unverified or un-authenticated
+            .then(function(){
+              //handles url with query(search) parameter
+              return recordResource.getAllUserRecords($location.search());
+            }, function(reason){
+              //rejected either user is un-authorized or un-authenticated
               redirectUrl = reason === 'unverified-client'? '/account/verification': '/login';
               return $q.reject();
             })
             .catch(function(){
               redirectUrl = redirectUrl || '/account';
+              $location.search({});
               $location.path(redirectUrl);
               return $q.reject();
             });
           return promise;
         }]
-      }
+      },
+      reloadOnSearch: false
     });
 }]);
-angular.module('account.upload').controller('RecordCtrl', [ '$scope', '$location', '$log', 'security', 'utility', 'recordResource', 'SOCIAL',
-  function($scope, $location, $log, security, utility, restResource, SOCIAL){
-    restResource.getUserRecordDetails().then(function(data){
-      var records = data.account;
-      for(var record in records){
-        if(records[record].deleted === false){
-            displayRecord(records[record]);
-        }
-      }
-    });
-    function displayRecord(record){
-      var first = document.createElement("TD");
-      first.innerHTML = record.name;
-      var second = document.createElement("TD");
-      second.innerHTML = record.votes;
-      var third = document.createElement("TD");
-      var play = createPlayButton(record);
-      third.appendChild(play);
-      var fourth = document.createElement("TD");
-      var sheetButton = createSheetButton(record);
-      fourth.appendChild(sheetButton);
-      var delButton = createDeleteButton(record);
-      var fifth = document.createElement("TD");
-      fifth.appendChild(delButton);
-      var row = document.createElement("TR");
-      var showButton = createShowButton(record);
-      var sixth = document.createElement("TD");
-      sixth.appendChild(showButton);
-      row.id = "row";
-      row.appendChild(first);
-      row.appendChild(second);
-      row.appendChild(third);
-      row.appendChild(fourth);
-      row.appendChild(fifth);
-      row.appendChild(sixth);
-      var table = document.getElementById("listRecords");
-      table.appendChild(row);
+angular.module('account.upload').controller('RecordCtrl', [ '$scope', '$location', '$log', 'security', 'utility', 'recordResource', 'SOCIAL', 'records',
+  function($scope, $location, $log, security, utility, restResource, SOCIAL, data){
+    var deserializeData = function(data){
+      $scope.items = data.items;
+      $scope.pages = data.pages;
+      $scope.filters = data.filters;
+      console.log($scope.filters);
+      $scope.records = data.data;
+    };
+
+    var fetchRecords = function(){
+      restResource.getAllUserRecords($scope.filters).then(function(data){
+        deserializeData(data);
+
+        //update url in browser addr bar
+        $location.search($scope.filters);
+      }, function(e){
+        $log.error(e);
+      });
+    };
+
+    // $scope methods
+    $scope.canSave = utility.canSave;
+    $scope.filtersUpdated = function(){
+      //reset pagination after filter(s) is updated
+      $scope.filters.page = undefined;
+      fetchRecords();
+    };
+    $scope.prev = function(){
+      $scope.filters.page = $scope.pages.prev;
+      fetchRecords();
+    };
+    $scope.next = function(){
+      $scope.filters.page = $scope.pages.next;
+      fetchRecords();
+    };
+
+    // $scope vars
+    //select elements and their associating options
+    $scope.sorts = [
+      {label: "votes \u25B2", value: "votes"},
+      {label: "votes \u25BC", value: "-votes"}
+    ];
+    $scope.limits = [
+      {label: "10 items", value: 10},
+      {label: "20 items", value: 20},
+      {label: "50 items", value: 50},
+      {label: "100 items", value: 100}
+    ];
+
+    //initialize $scope variables
+    deserializeData(data);
+
+    $scope.alerts = {
+      detail: [], identity: [], pass: []
+    };
+    $scope.show = function(record){
+      restResource.showRecord(record);
+    };
+
+    $scope.remove = function  (record) {
+      restResource.deleteRecord(record);
     }
 
-    function createDeleteButton(record){
-      var del = document.createElement("BUTTON");
-      del.id = "deleteButton";
-      del.onclick = function(){
-        restResource.deleteRecord(record).then(function(){
-          console.log("redirect");
-        });
-      };
-      del.innerHTML = "delete";
-      return del;
-    }
+    $scope.closeAlert = function(key, ind){
+      $scope.alerts[key].splice(ind, 1);
+    }; 
 
-    function createSheetButton(record){
-      var sheet = document.createElement("BUTTON");
-      sheet.id = "sheetButton";
-      /*sheet.onclick = function() {
-          location.href ='./sheetMusic?bufferName='+record.name;
-      };*/
-      sheet.innerHTML = "Show sheet music";
-      return sheet;
-    }
-
-    function createPlayButton(record){
-      var play = document.createElement("BUTTON");
-      play.id = "playButton";
-      play.onclick = function(){
-        createAudioTag(record);
-      };
-      play.innerHTML = "PLAY";
-      return play;
-    }
-
-    function createShowButton(record){
-      var checkbox = document.createElement('input');
-      checkbox.type = "checkbox";
-      checkbox.id = "checkbox";
-      checkbox.onclick = function OnChangeCheckbox (){
-        restResource.showRecord(record);
-      };
-      checkbox.checked = false;
-      if(record.show === true){
-        checkbox.checked = true;
-      } 
-      return checkbox;
-    }
-
-    function createAudioTag(record){
-      var audio = document.createElement("AUDIO");
-      audio.controls = true;
-      var source = document.createElement("SOURCE");
-      source.src = "http://localhost:3000/img/Night.mp3";
-      source.type = "audio/mpeg";
-      audio.appendChild(source);
-      var row = document.getElementById("row");
-      row.appendChild(audio);
-    } 
   }
 ]);

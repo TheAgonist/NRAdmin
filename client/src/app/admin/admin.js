@@ -29,7 +29,6 @@ angular.module('admin.index').controller('AdminCtrl', ['$scope', '$log', 'stats'
   function($scope, $log, stats){
     $scope.user = {
       users: stats['User'],
-      accounts: stats['Account'],
       admins: stats['Admin']
     };
   }]);
