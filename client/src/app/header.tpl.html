@@ -3,8 +3,8 @@
     <div class="container">
         <div class="navbar-header">
             <a href="/" class="navbar-brand">
-                <img src="/img/logo-symbol-64x64.png" class="navbar-logo">
-                <span class="navbar-brand-label">Angular Drywall</span>
+                <img src="/img/logo-junkyard-64x64.png" class="navbar-logo">
+                <span class="navbar-brand-label">BRMG</span>
             </a>
             <button class="navbar-toggle btn navbar-btn" ng-init="menuCollapsed = true" ng-click="menuCollapsed = !menuCollapsed">
                 <span class="icon-bar"></span>
@@ -13,7 +13,7 @@
             </button>
         </div>
         <div class="navbar-collapse collapse" collapse="menuCollapsed" ng-click="menuCollapsed = true">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav navbar-right">
                 <li ng-if="!isAuthenticated()" ng-class="{active: isActive('/')}"><a href="/">Home</a></li>
                 <li ng-if="!isAuthenticated()" ng-class="{active: isActive('/about')}"><a href="/about">About</a></li>
                 <li ng-if="!isAuthenticated()" ng-class="{active: isActive('/signup')}"><a href="/signup">Sign Up</a></li>

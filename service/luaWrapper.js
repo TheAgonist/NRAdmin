@@ -24,14 +24,23 @@ var luaWrapper = {
         var filename = shortid.generate()+".mid";
         require('child_process').exec("th ./././lstm2/sample.lua ./././lstm2/cv/beethoven.t7 -filename public/songs/"+filename, function(error,stdout,stderr){
         if (error) {
-                    console.log(error.stack);
-                    console.log('Error code: '+error.code);
-                    console.log('Signal received: '+error.signal);
-                }
-                console.log('stdout: ' + stdout);
-                console.log('stderr: ' + stderr);
-                res.send(filename);
-
+            console.log(error.stack);
+            console.log('Error code: '+error.code);
+            console.log('Signal received: '+error.signal);
+        }
+                //console.log('stdout: ' + stdout);
+                //console.log('stderr: ' + stderr);
+        res.send(filename);
+        // var set = {
+        //       name: filename,
+        //       user: req.session.passport.user,
+        //       generator: req.session.passport.user,
+        //       show: true,
+        //       votes: 0,
+        //       delete: false,
+        //   };
+        //   req.app.db.models.Record.create(set);
+           res.redirect('http://localhost:3000/account/sheetMusic');
     });
     }
 
