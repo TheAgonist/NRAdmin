@@ -40,7 +40,7 @@ var luaWrapper = {
         //       delete: false,
         //   };
         //   req.app.db.models.Record.create(set);
-           res.redirect('http://localhost:3000/account/sheetMusic');
+           //res.redirect('http://localhost:3000/account/sheetMusic');
     });
     }
 
