@@ -30,17 +30,18 @@ var luaWrapper = {
         }
                 //console.log('stdout: ' + stdout);
                 //console.log('stderr: ' + stderr);
-        res.send(filename);
-        // var set = {
-        //       name: filename,
-        //       user: req.session.passport.user,
-        //       generator: req.session.passport.user,
-        //       show: true,
-        //       votes: 0,
-        //       delete: false,
-        //   };
-        //   req.app.db.models.Record.create(set);
-           //res.redirect('http://localhost:3000/account/sheetMusic');
+        var set = {
+            name: filename,
+            showName: "generated",
+            user: req.session.passport.user,
+            generator: req.user.name,
+            show: true,
+            votes: 0,
+            delete: false
+        };
+        req.app.db.models.Record.create(set);
+        //res.send(filename);
+        res.redirect('http://localhost:3000/account/sheetMusic');
     });
     }
 

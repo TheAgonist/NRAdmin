@@ -14,7 +14,6 @@ angular.module('services.recordResource', ['security.service']).factory('recordR
   // public api
   var resource = {};
   resource.getAllRecords = function(filters){
-    //console.log("HERE FINALLY");
     return $http.get(baseUrl + '/record/records', { params: filters }).then(processResponse, processError);
   };
   resource.upvote = function(record){
@@ -30,6 +29,9 @@ angular.module('services.recordResource', ['security.service']).factory('recordR
   };
   resource.getAllUserRecords = function(filters){
     return $http.get(baseUrl + '/record/user', { params: filters }).then(processResponse, processError);
+  };
+  resource.getAllGeneratedRecordsForUser = function(filters){
+    return $http.get(baseUrl + '/record/generated', { params: filters }).then(processResponse, processError);
   };
   return resource;
 }]);

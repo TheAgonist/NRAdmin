@@ -8,6 +8,7 @@ exports = module.exports = function(app, mongoose) {
       user: {type: String, default: ''},
       show: {type: Boolean, default: false},
       votes: {type: Number, default: 0},
+      generated: {type: Boolean, default: false},
       voters: [String],
       deleted: {type: Boolean, default: false}
   });

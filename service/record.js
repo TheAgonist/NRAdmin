@@ -19,6 +19,9 @@ var record = {
 	    if(req.route.path == '/api/record/user'){
 	    	filters.user = req.user.username;
 	    }
+	    if(req.route.path == '/api/record/generated'){
+	    	filters.generated = true;
+	    }
 	    //console.log(filters.user);
 	    filters.deleted = false;
 	    req.app.db.models.Record.pagedFind({
@@ -37,7 +40,7 @@ var record = {
 	},
  	update: function(req,res,next){
  		var workflow = req.app.utility.workflow(req, res);
- 		console.log("right place right time");
+ 		//console.log("right place right time");
 
 	    workflow.on('validate', function() {
 	      workflow.emit('patchRecord');
@@ -66,6 +69,13 @@ var record = {
 		        	console.log(err);
 		          return workflow.emit('exception', err);
 		        }
+
+		        if(action == "/api/record/upvote"){
+			     	record.voters.push(req.user.username);
+			     	req.app.db.models.Record.findByIdAndUpdate(req.body._id, {voters: record.voters}, function(err,record){
+			     		console.log(err);
+			     	});
+			    }
 
 		        workflow.outcome.record = record;
 		        console.log(record.votes);
