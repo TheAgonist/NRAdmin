@@ -92,7 +92,7 @@ angular.module('account.upload').controller('RecordCtrl', [ '$scope', '$location
 
     $scope.remove = function  (record) {
       restResource.deleteRecord(record);
-    }
+    };
 
     $scope.closeAlert = function(key, ind){
       $scope.alerts[key].splice(ind, 1);

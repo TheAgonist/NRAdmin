@@ -72,7 +72,7 @@ angular.module('admin.accounts.index').controller('AccountsIndexCtrl', ['$scope'
       adminResource.deleteAccount(id).then(function(res){
         console.log(res);
       });
-    }
+    };
 
     // $scope vars
     //select elements and their associating options

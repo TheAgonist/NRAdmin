@@ -20,6 +20,6 @@ angular.module('services.commentResource', ['security.service']).factory('commen
   resource.getComments = function (data) {
     console.log(data);
     return $http.put(baseUrl+'/comment/all', data).then(processResponse,processError);
-  }
+  };
   return resource;
 }]);

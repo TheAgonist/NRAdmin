@@ -22,8 +22,6 @@ function apiEnsureAuthenticated(req, res, next){
     return next();
   }
   res.set('X-Auth-Required', 'true');
-  //no need to store the originalUrl in session: caller knows the return url
-  //req.session.returnUrl = req.originalUrl;
   res.status(401).send({errors: ['authentication required']});
 }
 
@@ -92,6 +90,7 @@ exports = module.exports = function(app, passport) {
 
   app.get('/api/record/records', record.find);
   app.get('/api/record/user', record.find);
+  app.get('/api/record/generated', record.find);
   app.put('/api/record/upvote', record.update);
   app.put('/api/record/delete', record.update);
   app.put('/api/record/show', record.update);

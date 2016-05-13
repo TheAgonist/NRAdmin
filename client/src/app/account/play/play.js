@@ -86,19 +86,19 @@ angular.module('account.play').controller('PlayCtrl', [ '$scope', '$location', '
 
     $scope.redirect = function(record) {
       $location.url("account/comments?songName="+record.name);
-    }
+    };
 
     $scope.upvote = function(record){
       var voted = false;
       for(var voter in record.voters){
-        if(record.voters[voter] == account.user.username || record.user == account.user.username){
+        if(record.voters[voter] === account.user.username || record.user === account.user.username){
           voted = true;
         }
       }
-      if(voted == false){
+      if(voted === false){
         restResource.upvote(record);
       }
 
-    } 
+    }; 
   }
 ]);

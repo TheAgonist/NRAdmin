@@ -6,7 +6,7 @@ angular.module('account.sheetMusic').config(['$routeProvider', 'securityAuthoriz
     .when('/account/sheetMusic', {
       templateUrl: 'account/sheetMusic/sheetMusic.tpl.html',
       controller: 'SheetMusicCtrl',
-      title: 'SheetMusic',
+      title: 'SheetMusic', 
     });
 }]);
 
@@ -14,7 +14,7 @@ angular.module('account.sheetMusic').config(['$routeProvider', 'securityAuthoriz
 
 angular.module('account.sheetMusic').controller('SheetMusicCtrl', [ '$scope', '$location', '$log', 'security', 'utility', 'linuxWrapperResource', 'SOCIAL',
   function($scope, $location, $log, security, utility, restResource, SOCIAL){
-     initController();
+    //  initController();
           
         function initController(){
           console.log('hi');
@@ -40,19 +40,19 @@ angular.module('account.sheetMusic').controller('SheetMusicCtrl', [ '$scope', '$
             // canvas.height+=100000;  
           
 
-          // Create the notes
+    //       // Create the notes
           
 
-          // Create a voice in 4/4
-          // var voice = new Vex.Flow.Voice({
-          //   num_beats: 4,
-          //   beat_value: 4,
+    //       // Create a voice in 4/4
+    //       // var voice = new Vex.Flow.Voice({
+    //       //   num_beats: 4,
+    //       //   beat_value: 4,
 
 
-          //   resolution: Vex.Flow.RESOLUTION
-          // });
+    //       //   resolution: Vex.Flow.RESOLUTION
+    //       // });
 
-          // Add notes to voice
+    //       // Add notes to voice
        
           function viewport()
           {
@@ -178,14 +178,5 @@ angular.module('account.sheetMusic').controller('SheetMusicCtrl', [ '$scope', '$
             }
         });
       }
-
-
-      /**
- * VexFlow 1.2.45 built on 2016-03-21.
- * Copyright (c) 2010 Mohit Muthanna Cheppudira <mohit@muthanna.com>
- *
- * http://www.vexflow.com  http://github.com/0xfe/vexflow
- */
-//# sourceMappingURL=vexflow-min.js.map
   }
 ]);
