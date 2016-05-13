@@ -18,7 +18,7 @@ var luaWrapper = {
                         console.log('Error code: '+error.code);
                         console.log('Signal received: '+error.signal);
                      }
-            //console.log(stdout);
+            console.log(stdout);
             res.send(stdout);
         });
     },
@@ -33,19 +33,7 @@ var luaWrapper = {
         }
                 //console.log('stdout: ' + stdout);
                 //console.log('stderr: ' + stderr);
-<<<<<<< HEAD
-        res.send(filename);
-        // var set = {
-        //       name: filename,
-        //       user: req.session.passport.user,
-        //       generator: req.session.passport.user,
-        //       show: true,
-        //       votes: 0,
-        //       delete: false,
-        //   };
-        //   req.app.db.models.Record.create(set);
-           //sres.redirect('http://localhost:3000/account/sheetMusic');
-=======
+        //res.send(filename);
         var set = {
             name: filename,
             showName: "generated",
@@ -58,7 +46,6 @@ var luaWrapper = {
         req.app.db.models.Record.create(set);
         //res.send(filename);
         res.redirect('http://localhost:3000/account/sheetMusic');
->>>>>>> d1e49aa847aa1146ffe29c4877e6a2829a3a2ee4
     });
     }
 

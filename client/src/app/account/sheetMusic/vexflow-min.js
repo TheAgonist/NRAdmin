@@ -7173,7 +7173,9 @@ if ("undefined" == typeof Vex && (Vex = function() {}), Vex.L = function(a, b) {
         resize: function(b, c) {
             if (this.backend == a.Backends.CANVAS) {
                 if (!this.element.getContext) throw new Vex.RERR("BadElement", "Can't get canvas context from element: " + this.sel);
-                this.element.width = b, this.element.height = c, this.ctx = a.bolsterCanvasContext(this.element.getContext("2d"))
+                this.element.width = b, 
+                this.element.height = c, 
+                this.ctx = a.bolsterCanvasContext(this.element.getContext("2d"))
             } else this.ctx.resize(b, c);
             return this
         },

@@ -14,7 +14,7 @@ angular.module('account.sheetMusic').config(['$routeProvider', 'securityAuthoriz
 
 angular.module('account.sheetMusic').controller('SheetMusicCtrl', [ '$scope', '$location', '$log', 'security', 'utility', 'linuxWrapperResource', 'SOCIAL',
   function($scope, $location, $log, security, utility, restResource, SOCIAL){
-    //  initController();
+      initController();
           
         function initController(){
           console.log('hi');
@@ -78,23 +78,29 @@ angular.module('account.sheetMusic').controller('SheetMusicCtrl', [ '$scope', '$
     var send = {
       bufferName: $location.$$search.bufferName.split(" ")[1]
     };
-    // console.log(send);
+     console.log(send);
     restResource.getBuffer(send).then(function(response){
-          var canvas = $("canvas")[0];            
-            //console.log(canvas);
+            var canvas = $("canvas")[0];            
+            var context = canvas.getContext("2d");
+            console.log(canvas);
             var renderer = new Vex.Flow.Renderer(canvas,
                   Vex.Flow.Renderer.Backends.CANVAS);
-            var ctx = renderer.getContext();
-            ctx.setFont("5px sans-serif");
-            var staveWidth = vpSize.width/2;
+            console.log(renderer);
+            //renderer.resize(0.5,0.5);
+            var ctx = renderer.ctx;
+            //canvas.getContext("2d").scale(0.1,0.1);
+            //ctx.setFont("Arial",5,"");
+            // canvas.width = vpSize.width/1.5+100;
+            var staveWidth = vpSize.width/1.5;
             var notesPerStave = Math.floor(staveWidth/50);
-            ctx.vexFlowCanvasContext.canvas.width = vpSize.width/2;
+            var notesPerPage = notesPerStave * 2;
+            ctx.vexFlowCanvasContext.canvas.width = vpSize.width/1.4;
             ctx.vexFlowCanvasContext.canvas.height = vpSize.height;//Math.ceil(response.length/notesPerStave)*300;
             stave = new Vex.Flow.Stave(0, 300,1000);
-                console.log(stave.addClef("treble").setContext(ctx).draw());
-                //console.log(noteList);
+                console.log(stave.addClef("treble").setContext(ctx).draw());  
                 Vex.Flow.Formatter.FormatAndDraw(ctx, stave, []);
             
+            $scope.page = 1;
             //ctx.background = "#000"
             // console.log(ctx);
             // console.log(staveWidth + "  " + notesPerStave);
@@ -129,11 +135,9 @@ angular.module('account.sheetMusic').controller('SheetMusicCtrl', [ '$scope', '$
               
               //console.log(new Vex.Flow.StaveNote({ keys: [element[1]], duration: element[0] }));
             }); 
-            if(noteList !== null){
-              
-              Vex.Flow.Formatter.FormatAndDraw(ctx, stave, noteList);
-
-            }
+            $scope.minPage=1;
+            $scope.maxPage=noteList.length/notesPerPage;
+            fetchPage();
             //console.log(noteList);
 
            //  console.log(noteList);
@@ -151,30 +155,41 @@ angular.module('account.sheetMusic').controller('SheetMusicCtrl', [ '$scope', '$
 
             $scope.next = function(){
               //console.log($scope.pages);
-              //$scope.filters.page = $scope.pages;
-              fetchPage();
+              if($scope.page < $scope.maxPage){
+                $scope.page ++;
+                fetchPage();
+              }
             }
             $scope.prev = function(){
               console.log("PREV!");
-              //$scope.filters.page = $scope.pages.next;
-              fetchPage();
+              if($scope.page > $scope.minPage){
+                $scope.page --;
+                fetchPage();
+              }
+              
             }
             function fetchPage(){
               console.log(ctx);
-              // if(k%notesPerStave === 0){
-              //   console.log(notesPerStave);
-              //   //canvas.height=(k/notesPerStave)*100 + globalDelta + 200;
-              //   globalDelta+= 10*Math.abs(highestNote) + 10*Math.abs(nextDelta);
-              //   highestNote = 0;
-              //   nextDelta = lowestNote;
-              //   lowestNote =1000;
-              //   stave = new Vex.Flow.Stave(100, (k/notesPerStave)*100 + globalDelta, staveWidth);
-              //   stave.addClef("treble").setContext(ctx).draw();
-              //   // console.log(noteList);
-              //   Vex.Flow.Formatter.FormatAndDraw(ctx, stave, noteList);
-              //   console.log(ctx);
-              //   noteList = [];
-                // }
+              var notesToDisplay = noteList.slice($scope.page*notesPerPage,$scope.page*notesPerPage+notesPerPage/2);
+
+              context.save();
+
+              // Use the identity matrix while clearing the canvas
+              context.setTransform(1, 0, 0, 1, 0, 0);
+              context.clearRect(0, 0, canvas.width, canvas.height);
+
+              // Restore the transform
+              context.restore();
+
+              stave = new Vex.Flow.Stave(0, 100, staveWidth, 100);
+              stave.addClef("treble").setContext(ctx).draw();
+              Vex.Flow.Formatter.FormatAndDraw(ctx, stave, notesToDisplay);
+              
+              var notesToDisplay = noteList.slice($scope.page*notesPerPage+notesPerPage/2,$scope.page*notesPerPage+notesPerPage);
+              stave = new Vex.Flow.Stave(0, 400, staveWidth, 100);
+              stave.addClef("treble").setContext(ctx).draw();
+              Vex.Flow.Formatter.FormatAndDraw(ctx, stave, notesToDisplay);
+            
             }
         });
       }
