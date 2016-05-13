@@ -28,7 +28,6 @@
                 <th>User</th>
                 <th></th>
                 <th></th>
-                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -38,7 +37,6 @@
                 <td ng-bind="record.user"></td>
                 <td><a class="btn btn-default btn-sm" ng-click="redirect(record)">Play</a></td>
                 <td><a class="btn btn-default btn-sm" ng-click="upvote(record)">Upvote</a></td>
-                <td><a class="btn btn-default btn-sm" href="./sheetMusic?bufferName=+record.name">sheetMusic</a></td>
             </tr>
             <tr ng-show="records.length === 0">
                 <td colspan="3">no documents matched</td>

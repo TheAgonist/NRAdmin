@@ -1,4 +1,4 @@
-angular.module('account.comments', ['config', 'account.settings.social', 'security.service', 'security.authorization', 'services.commentResource', 'services.utility','ui.bootstrap', 'directives.serverError']);
+  angular.module('account.comments', ['config', 'account.settings.social', 'security.service', 'security.authorization', 'services.commentResource', 'services.utility','ui.bootstrap', 'directives.serverError']);
 angular.module('account.comments').config(['$routeProvider', 'securityAuthorizationProvider', function($routeProvider){
   $routeProvider
     .when('/account/comments', {
@@ -27,20 +27,25 @@ angular.module('account.comments').config(['$routeProvider', 'securityAuthorizat
 }]);
 
 angular.module('account.comments').controller('CommentsCtrl', [ '$scope', '$location', '$log', 'security', 'utility', 'commentResource', 'accountResource', 'SOCIAL', 'ngAudio',
-  function($scope, $location, $log, security, utility, restResource, accountResource, SOCIAL, audio){
-
+  function($scope, $location, $log, security, utility, restResource, accountResource, SOCIAL, audio, router){
+    /*var url = '/night.mp3';            
+      $scope.audio = audio.load(url);
+      $scope.audio.volume = 0.8;*/
     var send = {
       song: $location.$$search.songName
     };
     restResource.getComments(send).then(function(data){
-      console.log(data);
+      $scope.comments = data;
+      console.log($scope);
     });
 
     var submitDetailForm = function(){
+      console.log($scope);
       var send = {
         content: $scope.comment,
         song: $location.$$search.songName
       };
+      console.log(send);
       restResource.setComment(send).then(function(){
         //console.log("ccc");
         //$location.href = "localhost:3000/account/comments";
@@ -49,6 +54,9 @@ angular.module('account.comments').controller('CommentsCtrl', [ '$scope', '$loca
 
     $scope.submit = function(){
       submitDetailForm();
+    };
+    $scope.redirect = function(record) {
+      $location.url("account/sheetMusic?bufferName="+$location.$$search.songName);
     };
   }
 ]);
