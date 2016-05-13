@@ -14,20 +14,28 @@
         </div>
         <div class="navbar-collapse collapse" collapse="menuCollapsed" ng-click="menuCollapsed = true">
             <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown" dropdown is-open="status.isopen">
+                    <a href="#" class="dropdown-toggle navbar-dropdown-admin" dropdown-toggle><i class="fa fa-user"></i>&nbsp;<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li ng-if="isAuthenticated()" ng-class="{active: isActive('/account/settings')}"><a href="/account/settings">Settings</a></li>
+                        <li ng-if="!isAuthenticated()"><a href="/login"><i class="fa fa-user"></i> Sign In</a></li>
+                        <li ng-if="isAuthenticated()"><a href="" ng-click="logout()">Sign Out</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
                 <li ng-if="!isAuthenticated()" ng-class="{active: isActive('/')}"><a href="/">Home</a></li>
                 <li ng-if="!isAuthenticated()" ng-class="{active: isActive('/about')}"><a href="/about">About</a></li>
                 <li ng-if="!isAuthenticated()" ng-class="{active: isActive('/signup')}"><a href="/signup">Sign Up</a></li>
                 <li ng-if="!isAuthenticated()" ng-class="{active: isActive('/contact')}"><a href="/contact">Contact</a></li>
                 <li ng-if="isAuthenticated()" ng-class="{active: isActive('/account')}"><a href="/account">My Account</a></li>
-                <li ng-if="isAuthenticated()" ng-class="{active: isActive('/account/settings')}"><a href="/account/settings">Settings</a></li>
+                
                 <li ng-if="isAuthenticated()" ng-class="{active: isActive('/account/play')}"><a href="/account/play">Play</a></li>
                 <li ng-if="isAuthenticated()" ng-class="{active: isActive('/account/upload')}"><a href="/account/upload">Upload</a></li>
                 <li ng-if="isAuthenticated()" ng-class="{active: isActive('/account/generate')}"><a href="/account/generate">Generate</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li ng-if="!isAuthenticated()"><a href="/login"><i class="fa fa-user"></i> Sign In</a></li>
-                <li ng-if="isAuthenticated()"><a href="" ng-click="logout()"><i class="fa fa-user"></i> Sign Out</a></li>
-            </ul>
+            
+
         </div>
     </div>
 </div>

@@ -10,7 +10,9 @@ var luaWrapper = {
     //router.put('/:_id', updateRecord);
 
      getBuffer: function(req, res){
-        require('child_process').exec("th ./././lstm2/encode.lua -filename public/songs/"+req.body.bufferName /*"./././public/img/bufferName "*/, function(error,stdout,stderr){
+        require('child_process').exec("~/torch/install/bin/th ~/NRAdmin/lstm2/encode.lua -filename ~/NRAdmin/public/songs/"+req.body.bufferName, function(error,stdout,stderr){
+            console.log(req.body.bufferName);
+        
             if (error) {
                         console.log(error.stack);
                         console.log('Error code: '+error.code);
@@ -22,7 +24,8 @@ var luaWrapper = {
     },
     generateNew: function(req, res){
         var filename = shortid.generate()+".mid";
-        require('child_process').exec("th ./././lstm2/sample.lua ./././lstm2/cv/beethoven.t7 -filename public/songs/"+filename, function(error,stdout,stderr){
+        //var seed = Math.round(new Date().getTime()/1000.0);
+        require('child_process').exec("~/torch/install/bin/th ~/NRAdmin/lstm2/sample.lua ~/NRAdmin/lstm2/cv/beethoven.t7 -temperature 0.8 -filename public/songs/"+filename/*+" -seed "+seed*/, function(error,stdout,stderr){
         if (error) {
             console.log(error.stack);
             console.log('Error code: '+error.code);
@@ -30,6 +33,19 @@ var luaWrapper = {
         }
                 //console.log('stdout: ' + stdout);
                 //console.log('stderr: ' + stderr);
+<<<<<<< HEAD
+        res.send(filename);
+        // var set = {
+        //       name: filename,
+        //       user: req.session.passport.user,
+        //       generator: req.session.passport.user,
+        //       show: true,
+        //       votes: 0,
+        //       delete: false,
+        //   };
+        //   req.app.db.models.Record.create(set);
+           //sres.redirect('http://localhost:3000/account/sheetMusic');
+=======
         var set = {
             name: filename,
             showName: "generated",
@@ -42,6 +58,7 @@ var luaWrapper = {
         req.app.db.models.Record.create(set);
         //res.send(filename);
         res.redirect('http://localhost:3000/account/sheetMusic');
+>>>>>>> d1e49aa847aa1146ffe29c4877e6a2829a3a2ee4
     });
     }
 
