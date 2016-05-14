@@ -25,7 +25,7 @@ var luaWrapper = {
     generateNew: function(req, res){
         var filename = shortid.generate()+".mid";
         //var seed = Math.round(new Date().getTime()/1000.0);
-        require('child_process').exec("~/torch/install/bin/th ~/NRAdmin/lstm2/sample.lua ~/NRAdmin/lstm2/cv/beethoven.t7 -temperature 0.8 -filename public/songs/"+filename/*+" -seed "+seed*/, function(error,stdout,stderr){
+        require('child_process').exec("sudo ~/torch/install/bin/th ~/NRAdmin/lstm2/sample.lua ~/NRAdmin/lstm2/cv/beethoven.t7 -temperature 0.4 -filename ~/NRAdmin/public/songs/"+filename/*+" -seed "+seed*/, function(error,stdout,stderr){
         if (error) {
             console.log(error.stack);
             console.log('Error code: '+error.code);
@@ -34,8 +34,14 @@ var luaWrapper = {
                 //console.log('stdout: ' + stdout);
                 //console.log('stderr: ' + stderr);
         //res.send(filename);
+        
         var mp3Name = filename.split(".");
-        require('child_process').exec("timidity "+__dirname + '/public/songs/'+filename+" -Ow -o - | ffmpeg -i - -acodec libmp3lame -ab 256k "+__dirname + '/public/songs/'+mp3Name[0]+".mp3");
+        require('child_process').exec("timidity ~/NRAdmin/public/songs/"+filename+" -Ow -o - | ffmpeg -i - -acodec libmp3lame -ab 256k ~/NRAdmin/public/songs/"+mp3Name[0]+".mp3", function(error,stdout,stderr){
+        if (error) {
+            console.log(error.stack);
+            console.log('Error code: '+error.code);
+            console.log('Signal received: '+error.signal);
+        }});
         var set = {
             name: filename,
             showName: "generated",
@@ -46,9 +52,11 @@ var luaWrapper = {
             delete: false
         };
         req.app.db.models.Record.create(set);
+        console.log(set);
         //res.send(filename);
-        res.redirect('http://localhost:3000/account/sheetMusic');
+        res.redirect('http://localhost:3000/account/sheetMusic?bufferName='+filename);
     });
+        
     }
 
 

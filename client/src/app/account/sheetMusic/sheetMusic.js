@@ -95,7 +95,7 @@ angular.module('account.sheetMusic').controller('SheetMusicCtrl', [ '$scope', '$
             var notesPerStave = Math.floor(staveWidth/50);
             var notesPerPage = notesPerStave * 2;
             ctx.vexFlowCanvasContext.canvas.width = vpSize.width/1.4;
-            ctx.vexFlowCanvasContext.canvas.height = vpSize.height;//Math.ceil(response.length/notesPerStave)*300;
+            ctx.vexFlowCanvasContext.canvas.height = vpSize.height/1.4;//Math.ceil(response.length/notesPerStave)*300;
             stave = new Vex.Flow.Stave(0, 300,1000);
                 console.log(stave.addClef("treble").setContext(ctx).draw());  
                 Vex.Flow.Formatter.FormatAndDraw(ctx, stave, []);
@@ -186,7 +186,7 @@ angular.module('account.sheetMusic').controller('SheetMusicCtrl', [ '$scope', '$
               Vex.Flow.Formatter.FormatAndDraw(ctx, stave, notesToDisplay);
               
               var notesToDisplay = noteList.slice($scope.page*notesPerPage+notesPerPage/2,$scope.page*notesPerPage+notesPerPage);
-              stave = new Vex.Flow.Stave(0, 400, staveWidth, 100);
+              stave = new Vex.Flow.Stave(0, 300, staveWidth, 100);
               stave.addClef("treble").setContext(ctx).draw();
               Vex.Flow.Formatter.FormatAndDraw(ctx, stave, notesToDisplay);
             
