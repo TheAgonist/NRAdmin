@@ -43,10 +43,8 @@ app.set('view engine', 'jade');
 app.use(require('morgan')('dev'));
 app.use(require('compression')());
 app.use(require('serve-static')(path.join(__dirname, 'client/dist')));
+
 app.use(require('serve-static')(path.join(__dirname, 'public/songs')));
-
-
-
 
 
 

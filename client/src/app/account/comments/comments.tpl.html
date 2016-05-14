@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 <audio controls  ng-src={{songName}}></audio>
 
 <div class="comments">
@@ -6,12 +8,82 @@
                 </textarea>
                 <button type="button" class="btn btn-primary btn-update" ng-click="submit()">Add</button>
         </form>
+>>>>>>> f98e457bc607411986fb09955ce8a77be75b56b2
 
+
+
+
+
+
+
+<div class="comments">
+    
+  <!--  <div border="1px">
         <div ng-repeat="comment in comments">
         	<textarea readonly ng-bind="comment.content" ng-class="{disabled: false}"></textarea>
+        	<div class="comment" contentEditable="false"><p  ng-bind="comment.content"></p></div>
         </div>
+    </div>-->
+<!--
+<form name="commentform">
+            <textarea name="comment" id="comment" rows="10" tabindex="4"  required="required" placeholder="Write your comment", ng-model="comment">
+            </textarea>
+            <input name="submit" type="button" ng-click="submit()">Add</input>
+    </form>	
+
+-->
+
+
 </div>
 <div class="sheetMusicButton">
 	<a class="btn btn-default btn-sm" ng-click="redirect()">sheetMusic</a>
 </div>
+
+
+
+
+
+
+<section id="comments" class="body">
+    
+    <header>
+      <h2>Comments</h2>
+    </header>
+      <ol  id="posts-list" class="hfeed has-comments">
+        <li ng-show="comments.length === 0">
+          <td class="no-comments">Be the first to add a comment.</td>
+        </li>
+
+        <li ng-repeat="comment in comments">
+          <article id="comment.id" class="hentry">  
+        
+            <footer class="post-info">
+              <abbr class="published">
+                {{comment.timeCreated}}
+              </abbr>
+
+              <address class="vcard author">
+                By {{comment.user}}
+              </address>
+            </footer>
+
+            <div class="entry-content">
+              <p ng-bind="comment.content"></p>
+            </div>
+        </article>
+      </li>
+    </ol>
+  </div>
+  
+  <div id="respond">
+    <h3>Leave a Comment</h3>
+    <form id="commentform">
+      <label for="comment" class="required">Your message</label>
+      <textarea name="comment" id="comment" rows="10" tabindex="4" ng-model="comment" required="required"></textarea>
+      <input name="submit" type="submit" ng-click="submit()" value="Submit comment"></input>
+    </form>
+
+  </div>
+      
+  </section>
 

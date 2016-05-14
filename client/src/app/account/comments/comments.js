@@ -40,9 +40,9 @@ angular.module('account.comments').controller('CommentsCtrl', [ '$scope', '$loca
     });
 
     var submitDetailForm = function(){
-      console.log($scope);
+      console.log($scope.comment);
       var send = {
-        content: $scope.comment,
+        content: $scope.comment.replace("\r\n","<br>"),
         song: $location.$$search.songName
       };
       console.log(send);
