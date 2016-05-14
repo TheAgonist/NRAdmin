@@ -34,6 +34,8 @@ var luaWrapper = {
                 //console.log('stdout: ' + stdout);
                 //console.log('stderr: ' + stderr);
         //res.send(filename);
+        var mp3Name = filename.split(".");
+        require('child_process').exec("timidity "+__dirname + '/public/songs/'+filename+" -Ow -o - | ffmpeg -i - -acodec libmp3lame -ab 256k "+__dirname + '/public/songs/'+mp3Name[0]+".mp3");
         var set = {
             name: filename,
             showName: "generated",

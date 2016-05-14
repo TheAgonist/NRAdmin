@@ -36,7 +36,7 @@
                 <td class="nowrap" ng-bind="record.showName"></td>
                 <td ng-bind="record.votes"></td>
                 <td><input type="checkbox" ng-model="record.show" ng-change="show(record)"></td>
-                <td><a class="btn btn-default btn-sm" href="./comments?songName=record.name">Play</a></td>
+                <td><a class="btn btn-default btn-sm" ng-click="redirect(record)">Play</a></td>
                 <td><a class="btn btn-default btn-sm" href="./sheetMusic?bufferName=+record.name">sheetMusic</a></td>
                 <td><a class="btn btn-default btn-sm" ng-click="remove(record)" href="javascript:location.reload(true)">Delete</a></td>
             </tr>

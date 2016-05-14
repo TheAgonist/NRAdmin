@@ -58,5 +58,8 @@ angular.module('account.comments').controller('CommentsCtrl', [ '$scope', '$loca
     $scope.redirect = function(record) {
       $location.url("account/sheetMusic?bufferName="+$location.$$search.songName);
     };
+    var name = $location.$$search.songName.split(".")[0];
+    $scope.songName = "/"+name+".mp3";
+    console.log($scope.songName);
   }
 ]);
