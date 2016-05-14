@@ -1,6 +1,5 @@
 angular.module('app', [
   'ngRoute',
-  'ngAudio',
   'config',
   'base',
   'signup',

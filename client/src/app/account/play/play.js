@@ -31,9 +31,9 @@ angular.module('account.play').config(['$routeProvider', 'securityAuthorizationP
     });
 }]);
 
-angular.module('account.play').controller('PlayCtrl', [ '$scope', '$location', '$log', 'security', 'utility', 'recordResource', 'accountDetails', 'SOCIAL', 'records',
-  function($scope, $location, $log, security, utility, restResource, account, SOCIAL, data){
-    //console.log(account);
+angular.module('account.play').controller('PlayCtrl', [ '$scope', '$window', '$location', '$log', 'security', 'utility', 'recordResource', 'accountDetails', 'SOCIAL', 'records',
+  function($scope, $window, $location, $log, security, utility, restResource, account, SOCIAL, data){
+    console.log($location);
     var deserializeData = function(data){
       $scope.items = data.items;
       $scope.pages = data.pages;
@@ -96,7 +96,9 @@ angular.module('account.play').controller('PlayCtrl', [ '$scope', '$location', '
         }
       }
       if(voted === false){
-        restResource.upvote(record);
+        restResource.upvote(record).then(function(){
+          $window.location.reload("account/play");
+        });
       }
 
     }; 

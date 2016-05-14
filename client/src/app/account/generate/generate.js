@@ -34,13 +34,13 @@ angular.module('account.generate').config(['$routeProvider', 'securityAuthorizat
 
 
 
-angular.module('account.generate').controller('GenerateCtrl', [ '$scope', '$location', '$log', 'security', 'utility', 'linuxWrapperResource', 'recordResource', 'SOCIAL', 'records',
-  function($scope, $location, $log, security, utility, restResource, recordResource, SOCIAL, data){
+angular.module('account.generate').controller('GenerateCtrl', [ '$scope', '$window' '$location', '$log', 'security', 'utility', 'linuxWrapperResource', 'recordResource', 'SOCIAL', 'records',
+  function($scope, $windiw, $location, $log, security, utility, restResource, recordResource, SOCIAL, data){
 
     var submitForm = function(){
       console.log("ready");
       restResource.generate().then(function(data){
-        console.log("generated");
+        $window.location.reload("account/generate");
       });
     };
 
