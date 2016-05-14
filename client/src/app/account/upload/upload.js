@@ -97,6 +97,8 @@ angular.module('account.upload').controller('RecordCtrl', [ '$scope', '$location
     $scope.closeAlert = function(key, ind){
       $scope.alerts[key].splice(ind, 1);
     }; 
-
+    $scope.redirect = function(record) {
+      $location.url("account/comments?songName="+record.name);
+    };
   }
 ]);

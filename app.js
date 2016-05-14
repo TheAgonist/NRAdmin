@@ -44,8 +44,10 @@ app.use(require('morgan')('dev'));
 app.use(require('compression')());
 app.use(require('serve-static')(path.join(__dirname, 'client/dist')));
 
+app.use(require('serve-static')(path.join(__dirname, 'public/songs')));
 
-app.use(express.static(path.join(__dirname, 'client/dist')));
+
+
 
 app.use(require('method-override')());
 app.use(bodyParser.json());
@@ -77,7 +79,8 @@ app.route('/upload').post(function(req, res, next){
     fstream = fs.createWriteStream(__dirname + '/public/songs/' + saveName);
     file.pipe(fstream);
     fstream.on('close', function () {
-      //console.log(req.app.db.models.Account);
+      var mp3Name = saveName.split(".");
+      require('child_process').exec("timidity "+__dirname + '/public/songs/'+saveName+" -Ow -o - | ffmpeg -i - -acodec libmp3lame -ab 256k "+__dirname + '/public/songs/'+mp3Name[0]+".mp3");
       req.app.db.models.User.findById(req.session.passport.user).then(function(result){
         var set = {
             name: saveName,
