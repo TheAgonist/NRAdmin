@@ -3,7 +3,7 @@ var record = {
 	insert: function(req,res,next){
 		//console.log(req.body);
 		var setFields = {
-			user: req.session.passport.user,
+			user: req.user.username,
 			content: req.body.content,
 			song: req.body.song
 		}

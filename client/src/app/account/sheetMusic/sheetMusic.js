@@ -76,7 +76,7 @@ angular.module('account.sheetMusic').controller('SheetMusicCtrl', [ '$scope', '$
           // }
     var notes = new Array();
     var send = {
-      bufferName: $location.$$search.bufferName.split(" ")[1]
+      bufferName: $location.$$search.bufferName
     };
      console.log(send);
     restResource.getBuffer(send).then(function(response){
